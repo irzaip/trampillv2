@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:trampillv2/ui/favorit/favorit.dart';
 import 'package:trampillv2/ui/home/home_screen.dart';
+import 'package:trampillv2/ui/lainnya/lainnya_dart.dart';
+import 'package:trampillv2/ui/materisaya/materi_saya.dart';
+import 'package:trampillv2/ui/pembayaran/pembayaran_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -13,10 +17,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndexBody = 0;
 
   final List<Widget> _dashboardBodyWidgets = <Widget>[
-    const HomeScreenWidget(),
-    const Placeholder(color: Colors.black),
-    const Placeholder(color: Colors.blue),
-    const Placeholder(color: Colors.green),
+    HomeScreenWidget(),
+    MateriSayaScreen(),
+    FavoritScreen(),
+    PembayaranScreen(),
+    LainnyaWidget(),
   ];
 
   @override
@@ -46,7 +51,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<BottomNavigationBarItem> _mainMenuItems() {
     return <BottomNavigationBarItem>[
       _mainMenuItemWidget('Beranda', Icons.home),
-      _mainMenuItemWidget('Kelas Saya', Icons.school),
+      _mainMenuItemWidget('Materi Saya', Icons.school),
+      _mainMenuItemWidget('Favorit',Icons.favorite),
       _mainMenuItemWidget('Pembelian', Icons.payment),
       _mainMenuItemWidget('Lainnya...', Icons.more_horiz),
     ];

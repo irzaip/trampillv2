@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trampillv2/ui/home/home_body.dart';
 
 class HomeScreenWidget extends StatelessWidget {
-  const HomeScreenWidget({Key? key}) : super(key: key);
+  HomeScreenWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,7 @@ class HomeScreenWidget extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Trampill'),
       ),
-      body: const HomeBodyWidget(),
+      body: HomeBodyWidget(),
     );
   }
 }
