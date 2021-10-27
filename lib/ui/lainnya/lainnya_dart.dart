@@ -10,7 +10,15 @@ class LainnyaWidget extends StatelessWidget {
       appBar: AppBar(
         title: const Text("TRMPLL"),
       ), 
-      body: const Text("Lainnya."),
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: (){
+              Navigator.pushNamed(context, '/login');
+            }, 
+            child: Text("Login"))
+        ],
+      ),
     );
   }
 }

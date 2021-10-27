@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-Future<List<ListMateri>> ApiListMateri() async {
+Future<List<ListMateri>> apiListMateri() async {
   const String api = '/api/listmateri';
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String access = prefs.getString("access").toString();

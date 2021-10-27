@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class MateriSayaScreen extends StatelessWidget {
   const MateriSayaScreen({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class MateriSayaScreen extends StatelessWidget {
         title: const Text("TRMPL"),
         ),
       body: ListView(children: [
-        Text("Test"),
+        const Text("Test"),
       ],),
       );
   }

@@ -11,15 +11,16 @@ void initpref() async {
   }
 }
 
-
 Future<bool> sendlogin(String username, String password) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String mainhome = prefs.getString("mainhome").toString();
   var uri = Uri.parse(mainhome + '/api/token/');
+  try {
   var request = http.MultipartRequest('POST', uri)
-    ..fields['username'] = username
-    ..fields['password'] = password;
-  var response = await request.send();
+  ..fields['username'] = username
+  ..fields['password'] = password;
+  var response = await request.send().timeout(const Duration(seconds: 7));
+
   if (response.statusCode == 200) {
     var result = await response.stream.bytesToString();
     Map<String, dynamic> parsed = json.decode(result.toString());
@@ -29,9 +30,12 @@ Future<bool> sendlogin(String username, String password) async {
     prefs.setString("refresh", parsed['refresh'].toString());
     return true;
   } else {
-    throw ("Login Error");
+    return false;
   }
+  } catch (e) { throw("Error connection");}
 }
+
+
 
 
 Future<String> refreshToken(token) async {
