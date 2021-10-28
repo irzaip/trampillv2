@@ -11,6 +11,34 @@ void initpref() async {
   }
 }
 
+Future<bool> relogin() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String username = prefs.getString("username").toString();
+  String password = prefs.getString("password").toString();
+  String mainhome = prefs.getString("mainhome").toString();
+  var uri = Uri.parse(mainhome + '/api/token/');
+  try {
+  var request = http.MultipartRequest('POST', uri)
+  ..fields['username'] = username
+  ..fields['password'] = password;
+  var response = await request.send().timeout(const Duration(seconds: 15));
+
+  if (response.statusCode == 200) {
+    var result = await response.stream.bytesToString();
+    Map<String, dynamic> parsed = json.decode(result.toString());
+    prefs.setString("username", username);
+    prefs.setString("password", password);
+    prefs.setString("access", parsed['access'].toString());
+    prefs.setString("refresh", parsed['refresh'].toString());
+    return true;
+  } else {
+    return false;
+  }
+  } catch (e) { throw("Error connection");}
+}
+
+
+
 Future<bool> sendlogin(String username, String password) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String mainhome = prefs.getString("mainhome").toString();

@@ -4,9 +4,12 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trampillv2/api/httpapi.dart';
 
 
-Future<List<ListMateri>> apiListMateri() async {
+Future<List<Materi>> apiListMateri() async {
+  await relogin();
+
   const String api = '/api/listmateri';
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String access = prefs.getString("access").toString();
@@ -24,13 +27,13 @@ Future<List<ListMateri>> apiListMateri() async {
 }
 
 // A function that converts a response body into a List<ListMateri>.
-List<ListMateri> parseListMateri(String responseBody) {
+List<Materi> parseListMateri(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-  return parsed.map<ListMateri>((json) => ListMateri.fromJson(json)).toList();
+  return parsed.map<Materi>((json) => Materi.fromJson(json)).toList();
 }
 
 
-class ListMateri {
+class Materi {
   final int id;
   final String judul;
   final String kode;
@@ -50,7 +53,7 @@ class ListMateri {
   final bool frontpage;
   final bool playlist;
 
-  ListMateri({
+  Materi({
     required this.id,
     required this.kode,
     required this.judul,
@@ -71,8 +74,8 @@ class ListMateri {
     required this.playlist,
   });
 
-  factory ListMateri.fromJson(Map<String, dynamic> json) {
-      return ListMateri(
+  factory Materi.fromJson(Map<String, dynamic> json) {
+      return Materi(
         id: json['id'], 
         kode: json['kode'], 
         judul: json['judul'],

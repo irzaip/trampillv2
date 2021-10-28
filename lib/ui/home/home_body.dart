@@ -7,11 +7,10 @@ class HomeBodyWidget extends StatefulWidget {
   HomeBodyWidget({Key? key}) : super(key: key);
   @override
   _HomeBodyWidgetState createState() => _HomeBodyWidgetState();
-}
+ }
 
 class _HomeBodyWidgetState extends State<HomeBodyWidget> {
-  List<Widget> daftarmateri = [];
-
+  late Future<List<Materi>> listMateri;
 
   _HomeBodyWidgetState() {
     initpref();
@@ -21,12 +20,42 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
 @override
 void initState() {
     super.initState();
+    listMateri = apiListMateri();
+    print(listMateri);
   }
 
 @override
 Widget build(BuildContext context) {
-    return ListView();
+    return Container(
+      child: FutureBuilder(
+        future: listMateri,
+        builder: (BuildContext context,AsyncSnapshot snapshot) {
+          if (snapshot.data != null) {
+              return ListView.builder(
+                itemCount: snapshot.data.length ,
+                itemBuilder: (context, int index) {
+                  return addCard(
+                    snapshot.data[index].judul,
+                    snapshot.data[index].pengajar,
+                    snapshot.data[index].pendek
+                    );
+                } 
+              );
+          }
+          if (snapshot.hasError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: const Text("Error loading"))
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+          }
+        
+      ),
+    );
 }
+
+
+
 
 Widget addCard(judul, pengajar, pendek) {
   return Card(
@@ -52,3 +81,5 @@ Widget addCard(judul, pengajar, pendek) {
       ]));
 }
 }
+
+
