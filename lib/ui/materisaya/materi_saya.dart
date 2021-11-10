@@ -1,14 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:trampillv2/api/api_pendaftaran.dart';
 import 'package:trampillv2/api/class_pendaftaran.dart';
-import 'package:trampillv2/api/httpapi.dart';
 import 'package:trampillv2/api/login_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'dart:io';
-import 'package:trampillv2/ui/login/login_screen.dart';
 
 class MateriSayaScreen extends StatefulWidget {
   const MateriSayaScreen({Key? key}) : super(key: key);
@@ -19,18 +16,13 @@ class MateriSayaScreen extends StatefulWidget {
 }
 
 class _MateriSayaScreenState extends State<MateriSayaScreen> {
-  var loggedin;
+  late var loggedin;
 
-  @override
-  void initState() {
-    // super.initState();
-    print("INITSTATENYA MATERISAYA");
-    loggedin = relogin();
-
-    if (loggedin == true) {
-      print("Loggedin");
-    }
-  }
+  // @override
+  // void initState() {
+  //   // super.initState();
+  //   loggedin = relogin();
+  // }
 
   Future<Object> pendaftaran() async {
     var prefs = await SharedPreferences.getInstance();
@@ -38,7 +30,6 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
     String access = prefs.getString("access").toString();
     String fulltoken = 'Bearer ' + access;
     String mainhome = prefs.getString("mainhome").toString();
-    print("Mainhome:" + mainhome);
 
     final request = await http.get(Uri.parse(mainhome + api),
         headers: {HttpHeaders.authorizationHeader: fulltoken});
@@ -70,8 +61,8 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
               } else if (snapshot.hasError) {
                 return Center(
                   child: Column(children: [
-                    SizedBox(height: 150),
-                    Text("Error loading. login First"),
+                    const SizedBox(height: 150),
+                    const Text("Error loading. login First"),
                     ElevatedButton(
                       onPressed: () async {
                         await Navigator.pushNamed(context, '/login');

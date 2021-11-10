@@ -15,11 +15,7 @@ class FavoritScreen extends StatefulWidget {
 }
 
 class _FavoritScreenState extends State<FavoritScreen> {
-  @override
-  void initState() {
-    //super.initState();
-    print("INITSTATENYA FAVORIT");
-  }
+
 
   Future<Object> favorit() async {
     var prefs = await SharedPreferences.getInstance();
@@ -27,7 +23,6 @@ class _FavoritScreenState extends State<FavoritScreen> {
     String access = prefs.getString("access").toString();
     String fulltoken = 'Bearer ' + access;
     String mainhome = prefs.getString("mainhome").toString();
-    print("Mainhome:" + mainhome);
 
     final request = await http.get(Uri.parse(mainhome + api),
         headers: {HttpHeaders.authorizationHeader: fulltoken});
@@ -61,8 +56,8 @@ class _FavoritScreenState extends State<FavoritScreen> {
               } else if (snapshot.hasError) {
                 return Center(
                   child: Column(children: [
-                    SizedBox(height: 150),
-                    Text("Error loading. login First"),
+                    const SizedBox(height: 150),
+                    const Text("Error loading. login First"),
                     ElevatedButton(
                       onPressed: () async {
                         await Navigator.pushNamed(context, '/login');

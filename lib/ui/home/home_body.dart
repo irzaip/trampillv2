@@ -4,7 +4,7 @@ import 'package:trampillv2/api/class_materi.dart';
 import 'package:trampillv2/ui/widgets/cards.dart';
 
 class HomeBodyWidget extends StatefulWidget {
-  HomeBodyWidget({Key? key}) : super(key: key);
+  const HomeBodyWidget({Key? key}) : super(key: key);
   @override
   _HomeBodyWidgetState createState() => _HomeBodyWidgetState();
 }
@@ -12,15 +12,10 @@ class HomeBodyWidget extends StatefulWidget {
 class _HomeBodyWidgetState extends State<HomeBodyWidget> {
   late Future<List<Materi>> listMateri;
 
-  _HomeBodyWidgetState() {
-    //initpref();
-  }
-
   @override
   void initState() {
     //super.initState();
     listMateri = apiListMateri(context);
-    print("INITSTATENYA HOMEBODY");
   }
 
   @override

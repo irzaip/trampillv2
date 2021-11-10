@@ -17,7 +17,6 @@ class DashboardScreen extends StatefulWidget {
   void initState() {
     //super.initState();
     loggedin = relogin();
-    print("INITSTATENYA DASHBOARD");
   }
 
   @override
@@ -28,7 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndexBody = 0;
 
   final List<Widget> _dashboardBodyWidgets = <Widget>[
-    HomeScreenWidget(),
+    const HomeScreenWidget(),
     const MateriSayaScreen(),
     const FavoritScreen(),
     const PembayaranScreen(),

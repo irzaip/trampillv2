@@ -15,11 +15,7 @@ class PembayaranScreen extends StatefulWidget {
 }
 
 class _PembayaranScreenState extends State<PembayaranScreen> {
-  @override
-  void initState() {
-    //super.initState();
-    print("INITSTATE PEMBAYARAN");
-  }
+
 
   Future<Object> pembayaran() async {
     var prefs = await SharedPreferences.getInstance();
@@ -27,7 +23,6 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
     String access = prefs.getString("access").toString();
     String fulltoken = 'Bearer ' + access;
     String mainhome = prefs.getString("mainhome").toString();
-    print("Mainhome:" + mainhome);
 
     final request = await http.get(Uri.parse(mainhome + api),
         headers: {HttpHeaders.authorizationHeader: fulltoken});
@@ -64,8 +59,8 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
               } else if (snapshot.hasError) {
                 return Center(
                   child: Column(children: [
-                    SizedBox(height: 150),
-                    Text("Error loading. login First"),
+                    const SizedBox(height: 150),
+                    const Text("Error loading. login First"),
                     ElevatedButton(
                       onPressed: () async {
                         await Navigator.pushNamed(context, '/login');

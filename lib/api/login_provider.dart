@@ -12,7 +12,6 @@ class LoginState with ChangeNotifier {
 
   login() async {
     loggedin = await relogin();
-    print("LOGGIN PRESSED");
 
     if (loggedin == true) {
       state = LoginStatusState.loggedin;
@@ -30,7 +29,6 @@ class LoginState with ChangeNotifier {
   }
 
   void tulis(String value) {
-    print(value);
     _status = value;
     notifyListeners();
   }
