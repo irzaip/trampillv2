@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:trampillv2/ui/home/home_body.dart';
 
-class HomeScreenWidget extends StatelessWidget {
+class HomeScreenWidget extends StatefulWidget {
   HomeScreenWidget({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreenWidget> createState() => _HomeScreenWidgetState();
+}
+
+class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

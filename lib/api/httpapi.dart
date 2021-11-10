@@ -3,21 +3,20 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void initpref() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String mainhome = prefs.getString("mainhome").toString();
-  if (mainhome == "null") {
-    prefs.setString("mainhome", "https://neo.trampill.com");
-  }
-}
 
 Future<bool> relogin() async {
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String username = prefs.getString("username").toString();
+
+  if (username == "null") {
+    return false;
+  }
+
   String password = prefs.getString("password").toString();
   String mainhome = prefs.getString("mainhome").toString();
   var uri = Uri.parse(mainhome + '/api/token/');
-  try {
+
   var request = http.MultipartRequest('POST', uri)
   ..fields['username'] = username
   ..fields['password'] = password;
@@ -34,10 +33,7 @@ Future<bool> relogin() async {
   } else {
     return false;
   }
-  } catch (e) { throw("Error connection");}
 }
-
-
 
 Future<bool> sendlogin(String username, String password) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();

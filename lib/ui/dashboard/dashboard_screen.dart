@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:trampillv2/api/httpapi.dart';
 import 'package:trampillv2/ui/favorit/favorit.dart';
 import 'package:trampillv2/ui/home/home_screen.dart';
-import 'package:trampillv2/ui/lainnya/lainnya_dart.dart';
+import 'package:trampillv2/ui/lainnya/lainnya.dart';
+//import 'package:trampillv2/ui/login/login_screen.dart';
 import 'package:trampillv2/ui/materisaya/materi_saya.dart';
 import 'package:trampillv2/ui/pembayaran/pembayaran_screen.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+  DashboardScreen({Key? key}) : super(key: key);
   static const String routeName = '/dashboard';
+  var loggedin;
+
+  @override
+  void initState() {
+    //super.initState();
+    loggedin = relogin();
+    print("INITSTATENYA DASHBOARD");
+  }
 
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
@@ -18,19 +29,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   final List<Widget> _dashboardBodyWidgets = <Widget>[
     HomeScreenWidget(),
-    MateriSayaScreen(),
-    FavoritScreen(),
-    PembayaranScreen(),
-    LainnyaWidget(),
+    const MateriSayaScreen(),
+    const FavoritScreen(),
+    const PembayaranScreen(),
+    const LainnyaWidget(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndexBody,
-        children: _dashboardBodyWidgets,
-      ),
+      body: _dashboardBodyWidgets[_selectedIndexBody],
+      // IndexedStack(
+      //   index: _selectedIndexBody,
+      //   children: _dashboardBodyWidgets,
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0,
         selectedItemColor: Colors.amber[800],
@@ -52,7 +64,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return <BottomNavigationBarItem>[
       _mainMenuItemWidget('Beranda', Icons.home),
       _mainMenuItemWidget('Materi Saya', Icons.school),
-      _mainMenuItemWidget('Favorit',Icons.favorite),
+      _mainMenuItemWidget('Favorit', Icons.favorite),
       _mainMenuItemWidget('Pembelian', Icons.payment),
       _mainMenuItemWidget('Lainnya...', Icons.more_horiz),
     ];
