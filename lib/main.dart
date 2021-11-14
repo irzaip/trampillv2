@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trampillv2/api/login_provider.dart';
-import 'package:trampillv2/routes/routes.dart';
+import 'package:get/get.dart';
+import 'package:trampillv2/ui/dashboard/dashboard_screen.dart';
+import 'package:trampillv2/ui/favorit/favorit.dart';
+import 'package:trampillv2/ui/home/home_screen.dart';
+import 'package:trampillv2/ui/lainnya/hubungikami.dart';
+import 'package:trampillv2/ui/lainnya/lainnya.dart';
+import 'package:trampillv2/ui/lainnya/privasi.dart';
+import 'package:trampillv2/ui/lainnya/syaratketentuan.dart';
+import 'package:trampillv2/ui/lainnya/tentang.dart';
+import 'package:trampillv2/ui/lainnya/tentangapp.dart';
+import 'package:trampillv2/ui/login/forgot_screen.dart';
+import 'package:trampillv2/ui/login/login_screen.dart';
+import 'package:trampillv2/ui/materi/detail_materi.dart';
+import 'package:trampillv2/ui/materi/materi_screen.dart';
+import 'package:trampillv2/ui/materisaya/materi_saya.dart';
+import 'package:trampillv2/ui/pembayaran/pembayaran_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(ChangeNotifierProvider(
-      create: (context) => LoginState(), child: const MyApp()));
+  runApp(const  MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -14,9 +26,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return GetMaterialApp(
+      getPages: [
+        GetPage(name: "/", page: () => DashboardScreen()),
+        GetPage(name: "/materi", page: () => const MateriScreen()),
+        GetPage(name: "/home", page: () => const HomeScreenWidget()),
+        GetPage(name: "/favorit", page: () => const FavoritScreen()),
+        GetPage(name: "/materisaya", page: () => const MateriSayaScreen()),
+        GetPage(name: "/pembayaran", page: () => const PembayaranScreen()),
+        GetPage(name: "/lainnya", page: () => const LainnyaWidget()),
+        GetPage(name: "/login", page: () => const LoginScreen()),
+        GetPage(name: "/detailmateri", page: () => const DetailMateriScreen()),
+        GetPage(name: "/forgot", page: ()=> const ForgotScreen()),
+        GetPage(name: "/hubungikami", page: () => HubungiKamiScreen()),
+        GetPage(name: "/privasi", page: () => PrivasiScreen()),
+        GetPage(name: "/syaratketentuan", page: () => SyaratKetentuanScreen()),
+        GetPage(name: "/tentang", page: () => TentangScreen()),
+        GetPage(name: "/tentangapp", page: () => const TentangAppScreen()),
+      ],
       debugShowCheckedModeBanner: false,
-      onGenerateRoute: Routes.generateRoute,
+      // onGenerateRoute: Routes.generateRoute,
     );
   }
 }
+

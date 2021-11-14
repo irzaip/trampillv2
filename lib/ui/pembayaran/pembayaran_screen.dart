@@ -3,9 +3,7 @@ import 'package:trampillv2/api/class_pembayaran.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
 import 'dart:io';
-import 'package:trampillv2/api/login_provider.dart';
 
 class PembayaranScreen extends StatefulWidget {
   const PembayaranScreen({Key? key}) : super(key: key);
@@ -44,8 +42,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
       appBar: AppBar(
         title: const Text("TRMPL"),
       ),
-      body: Consumer<LoginState>(builder: (context, login, _) {
-        return FutureBuilder(
+      body: FutureBuilder(
             future: pembayaran(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.data != null) {
@@ -73,7 +70,6 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
-            });
       }),
     );
   }

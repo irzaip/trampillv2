@@ -3,10 +3,9 @@ import 'package:trampillv2/api/httpapi.dart';
 import 'package:trampillv2/ui/favorit/favorit.dart';
 import 'package:trampillv2/ui/home/home_screen.dart';
 import 'package:trampillv2/ui/lainnya/lainnya.dart';
-//import 'package:trampillv2/ui/login/login_screen.dart';
 import 'package:trampillv2/ui/materisaya/materi_saya.dart';
 import 'package:trampillv2/ui/pembayaran/pembayaran_screen.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
+
 
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key? key}) : super(key: key);

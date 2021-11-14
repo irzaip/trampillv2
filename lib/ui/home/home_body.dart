@@ -27,8 +27,28 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
           return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (context, int index) {
-                return materiCard(snapshot.data[index].judul,
-                    snapshot.data[index].pengajar, snapshot.data[index].pendek);
+                return materiCard(
+                    context,
+                    Materi(
+                      id: snapshot.data[index].id,
+                      kode: snapshot.data[index].kode,
+                      judul: snapshot.data[index].judul,
+                      rating: snapshot.data[index].rating,
+                      pendek: snapshot.data[index].pendek ,
+                      deskripsi: snapshot.data[index].deskripsi,
+                      gambar: snapshot.data[index].gambar,
+                      kategori: snapshot.data[index].gambar,
+                      copywrite: snapshot.data[index].copywrite,
+                      tags: snapshot.data[index].tags,
+                      harga: snapshot.data[index].harga,
+                      discount: snapshot.data[index].discount,
+                      pengajar: snapshot.data[index].pengajar,
+                      tentangPengajar: snapshot.data[index].tentangPengajar,
+                      hidden: snapshot.data[index].hidden,
+                      featured: snapshot.data[index].featured,
+                      frontpage: snapshot.data[index].frontpage,
+                      playlist: snapshot.data[index].playlist
+                      ));
               });
         }
         if (snapshot.hasError) {

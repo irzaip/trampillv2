@@ -3,9 +3,7 @@ import 'package:trampillv2/api/class_favorit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
 import 'dart:io';
-import 'package:trampillv2/api/login_provider.dart';
 
 class FavoritScreen extends StatefulWidget {
   const FavoritScreen({Key? key}) : super(key: key);
@@ -41,8 +39,7 @@ class _FavoritScreenState extends State<FavoritScreen> {
       appBar: AppBar(
         title: const Text("TRMPL"),
       ),
-      body: Consumer<LoginState>(builder: (context, login, _) {
-        return FutureBuilder(
+      body: FutureBuilder(
             future: favorit(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.data != null) {
@@ -70,7 +67,6 @@ class _FavoritScreenState extends State<FavoritScreen> {
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
-            });
       }),
     );
   }

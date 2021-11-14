@@ -2,9 +2,10 @@
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'class_materi.dart';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 Future<List<Materi>> apiListMateri(context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -14,6 +15,9 @@ Future<List<Materi>> apiListMateri(context) async {
   if (mainhome == "null") {
     await prefs.setString("mainhome", "https://neo.trampill.com");
     mainhome = "https://neo.trampill.com";
+    // await prefs.setString("mainhome", "https://127.0.0.1:8090");
+    // mainhome = "https://127.0.0.1:8090";
+    
   }
 
   const String api = '/api/listmateri';

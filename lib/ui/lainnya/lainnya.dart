@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LainnyaWidget extends StatelessWidget {
   const LainnyaWidget({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class LainnyaWidget extends StatelessWidget {
                 children: [
                   ElevatedButton(
                       onPressed: () async {
-                        await Navigator.pushNamed(context, '/login');
+                        await Get.toNamed('/login');
                       },
                       child: const Text("LOGIN")),
                   ElevatedButton(
@@ -28,12 +29,12 @@ class LainnyaWidget extends StatelessWidget {
                       onPressed: () {}, child: const Text("Akun Saya")),
                   ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/tentang');
+                        Get.toNamed('/tentang');
                       },
                       child: const Text("Tentang kami")),
                   ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/hubungikami');
+                        Get.toNamed('/hubungikami');
                       },
                       child: const Text("Hubungi kami")),
                   ElevatedButton(
@@ -41,17 +42,17 @@ class LainnyaWidget extends StatelessWidget {
                       child: const Text("Cara Membuat kelas")),
                   ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/privasi');
+                        Get.toNamed('/privasi');
                       },
                       child: const Text("Privasi")),
                   ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/syaratketentuan');
+                        Get.toNamed('/syaratketentuan');
                       },
                       child: const Text("Syarat & Ketentuan")),
                   ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, "/tentangapp");
+                        Get.toNamed("/tentangapp");
                       },
                       child: const Text("Tentang Aplikasi ini")),
                 ],

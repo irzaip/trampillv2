@@ -4,6 +4,7 @@ import 'package:trampillv2/ui/lainnya/hubungikami.dart';
 import 'package:trampillv2/ui/lainnya/syaratketentuan.dart';
 import 'package:trampillv2/ui/lainnya/tentangapp.dart';
 import 'package:trampillv2/ui/login/login_screen.dart';
+import 'package:trampillv2/ui/materi/detail_materi.dart';
 import 'package:trampillv2/ui/materisaya/materi_saya.dart';
 import 'package:trampillv2/ui/splashscreen/splash_screen.dart';
 import 'package:trampillv2/ui/materi/materi_screen.dart';
@@ -12,6 +13,7 @@ import 'package:trampillv2/ui/lainnya/tentang.dart';
 
 class Routes {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
+    
     switch (settings.name) {
       case LoginScreen.routeName:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
@@ -33,6 +35,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const TentangAppScreen());
       case MateriSayaScreen.routeName:
         return MaterialPageRoute(builder: (_) => const MateriSayaScreen());
+      case DetailMateriScreen.routeName:
+        return MaterialPageRoute(builder: (_) => const DetailMateriScreen());
     }
   }
 }

@@ -2,9 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trampillv2/api/class_pendaftaran.dart';
-import 'package:trampillv2/api/login_provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'dart:io';
 
 class MateriSayaScreen extends StatefulWidget {
@@ -48,8 +46,7 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
       appBar: AppBar(
         title: const Text("TRMPL"),
       ),
-      body: Consumer<LoginState>(builder: (context, login, _) {
-        return FutureBuilder(
+      body: FutureBuilder(
             future: pendaftaran(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.data != null) {
@@ -75,7 +72,6 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
-            });
       }),
     );
   }

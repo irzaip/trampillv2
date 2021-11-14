@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:trampillv2/api/class_materi.dart';
+import 'package:get/get.dart';
 
-Widget materiCard(judul, pengajar, pendek) {
+Widget materiCard(context, Materi materi) {
+
   return Card(
       elevation: 10,
       color: Colors.white,
@@ -15,11 +18,15 @@ Widget materiCard(judul, pengajar, pendek) {
               size: 50,
             ),
             Expanded(
-              child: Text(judul),
+              child: Text(materi.judul),
             )
           ],
         ),
-        Text(pendek),
-        Text(pengajar),
+        Text(materi.pendek),
+        Text(materi.pengajar),
+        ElevatedButton(onPressed: () async {
+          await Get.toNamed("/detailmateri", arguments: materi);
+        }, 
+        child: const Text("Buka"))
       ]));
 }
