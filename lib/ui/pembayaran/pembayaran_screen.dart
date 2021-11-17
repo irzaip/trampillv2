@@ -51,7 +51,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                     padding: const EdgeInsets.all(20.0),
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, int index) {
-                      return Text(snapshot.data[index].no_order.toString());
+                      return Text(snapshot.data[index].noOrder.toString());
                     });
               } else if (snapshot.hasError) {
                 return Center(

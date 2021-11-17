@@ -14,6 +14,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Trampill'),
+        leading: Icon(Icons.festival),
+        actions: [
+          IconButton(
+            onPressed: () {}, 
+            icon: Icon(Icons.search),),
+          IconButton(onPressed: (){}, 
+          icon: Icon(Icons.category)),
+        ],
+
       ),
       body: const HomeBodyWidget(),
     );

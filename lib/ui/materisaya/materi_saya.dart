@@ -40,6 +40,22 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
     }
   }
 
+  Widget materiCard(judul, id) {
+  TextStyle bigfont = const TextStyle(
+      fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold);
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Expanded(child: Text(judul, style: bigfont,)),
+            ElevatedButton(onPressed: () {}, child: const Text("Buka")),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,32 +63,34 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
         title: const Text("TRMPL"),
       ),
       body: FutureBuilder(
-            future: pendaftaran(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.data != null) {
-                return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, int index) {
-                      return Text(snapshot.data[index].materi.judul.toString());
-                    });
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Column(children: [
-                    const SizedBox(height: 150),
-                    const Text("Error loading. login First"),
-                    ElevatedButton(
-                      onPressed: () async {
-                        await Navigator.pushNamed(context, '/login');
-                        setState(() {});
-                      },
-                      child: const Text("Login"),
-                    )
-                  ]),
-                );
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-      }),
+          future: pendaftaran(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.data != null) {
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, int index) {
+                    return materiCard(
+                      snapshot.data[index].materi.judul.toString(), 
+                      snapshot.data[index].materi.id.toString());
+                  });
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Column(children: [
+                  const SizedBox(height: 150),
+                  const Text("Error loading. login First"),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await Navigator.pushNamed(context, '/login');
+                      setState(() {});
+                    },
+                    child: const Text("Login"),
+                  )
+                ]),
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          }),
     );
   }
 }

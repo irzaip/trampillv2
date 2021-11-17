@@ -35,25 +35,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _dashboardBodyWidgets[_selectedIndexBody],
-      // IndexedStack(
-      //   index: _selectedIndexBody,
-      //   children: _dashboardBodyWidgets,
-      // ),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0,
-        selectedItemColor: Colors.amber[800],
-        type: BottomNavigationBarType.fixed,
-        items: _mainMenuItems(),
-        currentIndex: _selectedIndexBody,
-        onTap: (index) {
-          setState(() {
-            _selectedIndexBody = index;
-          });
-        },
-        showUnselectedLabels: true,
-        showSelectedLabels: true,
+    return SafeArea(
+      child: Scaffold(
+        body: _dashboardBodyWidgets[_selectedIndexBody],
+        // IndexedStack(
+        //   index: _selectedIndexBody,
+        //   children: _dashboardBodyWidgets,
+        // ),
+        bottomNavigationBar: BottomNavigationBar(
+          elevation: 0,
+          selectedItemColor: Colors.amber[800],
+          type: BottomNavigationBarType.fixed,
+          items: _mainMenuItems(),
+          currentIndex: _selectedIndexBody,
+          onTap: (index) {
+            setState(() {
+              _selectedIndexBody = index;
+            });
+          },
+          showUnselectedLabels: true,
+          showSelectedLabels: true,
+        ),
       ),
     );
   }

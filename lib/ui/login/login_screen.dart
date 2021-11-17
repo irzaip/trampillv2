@@ -48,71 +48,80 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: const Text("TRMPL"),
       ),
-      body: Column(
-        children: [
-          TextField(
-            controller: _controllerUser,
-            onChanged: (String value) {
-              fUsername = value;
-            },
-            obscureText: false,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'username',
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            SizedBox(height: 30,),
+            TextField(
+              controller: _controllerUser,
+              onChanged: (String value) {
+                fUsername = value;
+              },
+              obscureText: false,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'username',
+              ),
             ),
-          ),
-          TextField(
-            controller: _controllerPass,
-            onChanged: (String value) {
-              fPassword = value;
-            },
-            obscureText: true,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Password',
+            SizedBox(height: 20,),
+            TextField(
+              controller: _controllerPass,
+              onChanged: (String value) {
+                fPassword = value;
+              },
+              obscureText: true,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Password',
+              ),
             ),
-          ),
-          ElevatedButton(
-              onPressed: () async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                try {
-                  loggedin = await sendlogin(fUsername, fPassword);
+            SizedBox(height: 20,),
+            ElevatedButton(
+                onPressed: () async {
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  try {
+                    loggedin = await sendlogin(fUsername, fPassword);
 
-                  if (loggedin == true) {
-                    prefs.setString("username", fUsername);
-                    prefs.setString("password", fPassword);
-                    
+                    if (loggedin == true) {
+                      prefs.setString("username", fUsername);
+                      prefs.setString("password", fPassword);
+                      
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Login Sukses."),
+                      ));
+
+                      Navigator.pop(context);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text(
+                            "Login Gagal ! - Username or Password Error"),
+                      ));
+                    }
+                  } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text("Login Sukses."),
+                      content: Text("Error Connect to server"),
                     ));
-
                     Navigator.pop(context);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text(
-                          "Login Gagal ! - Username or Password Error"),
-                    ));
                   }
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Error Connect to server"),
-                  ));
+                  setState(() {});
+                },
+                child: const Text("LOGIN")),
+            ElevatedButton(
+                onPressed: () async {
+                  var prefs = await SharedPreferences.getInstance();
+                  await prefs.setString("username", "null");
+                  await prefs.setString("password", "null");
+                  await prefs.setString("access", "null");
+                  await prefs.setString("refresh", "null");
                   Navigator.pop(context);
-                }
-                setState(() {});
-              },
-              child: const Text("Login")),
-          ElevatedButton(
-              onPressed: () async {
-                var prefs = await SharedPreferences.getInstance();
-                await prefs.setString("username", "null");
-                await prefs.setString("password", "null");
-                await prefs.setString("access", "null");
-                await prefs.setString("refresh", "null");
-                Navigator.pop(context);
-              },
-              child: const Text("LOGOUT"))
-        ],
+                },
+                child: const Text("LOGOUT")),
+                ElevatedButton(
+                 onPressed: () { },
+                 child: const Text("REGISTER"))
+          ],
+        ),
       ),
     );
   }

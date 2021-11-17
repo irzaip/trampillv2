@@ -17,6 +17,7 @@ dependencies:
   flutter_markdown: ^0.6.8
   url_launcher: ^6.0.12
   get: ^4.3.8
+  intl: any
 
 dev_dependencies:
   flutter_test:

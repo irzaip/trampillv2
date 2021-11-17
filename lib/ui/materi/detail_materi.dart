@@ -28,13 +28,14 @@ void initState() {
 }
   Future<Object> listtopic(reqId) async {
     var prefs = await SharedPreferences.getInstance();
-    String api = '/api/topic/' + reqId.toString();
+    String api = '/api/listtopic/' + reqId.toString();
     String access = prefs.getString("access").toString();
-    String fulltoken = 'Bearer ' + access;
+    // String fulltoken = 'Bearer ' + access;
     String mainhome = prefs.getString("mainhome").toString();
 
     final request = await http.get(Uri.parse(mainhome + api),
-        headers: {HttpHeaders.authorizationHeader: fulltoken});
+        //headers: {HttpHeaders.authorizationHeader: fulltoken}
+        );
 
     if (request.statusCode == 200) {
       var result = compute(parseListTopic, request.body);
@@ -43,6 +44,9 @@ void initState() {
       throw ("Error loading topic, login?");
     }
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
