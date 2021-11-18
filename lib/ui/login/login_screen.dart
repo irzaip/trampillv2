@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
         title: const Text("TRMPL"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
             SizedBox(height: 30,),

@@ -33,6 +33,16 @@ class _FavoritScreenState extends State<FavoritScreen> {
     }
   }
 
+  Widget favCard(materi) {
+    return Card(
+      elevation: 10,
+      child: ListTile(
+        title: Text(materi.judul),
+        leading: Icon(Icons.arrow_forward),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +58,7 @@ class _FavoritScreenState extends State<FavoritScreen> {
                     padding: const EdgeInsets.all(20.0),
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, int index) {
-                      return Text(snapshot.data[index].materi.judul.toString());
+                      return favCard(snapshot.data[index].materi);
                     });
               } else if (snapshot.hasError) {
                 return Center(

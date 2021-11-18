@@ -33,7 +33,16 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
     }
   }
 
-
+  Widget infoPembayaran(pembayaran) {
+    return Card(
+      elevation: 10,
+      child: ListTile(
+        leading: Icon(Icons.payment),
+        title: Text(pembayaran.noOrder.toString()),
+        subtitle: Text(pembayaran.status.toString()),
+      ),
+      );
+  }
 
 
   @override
@@ -51,7 +60,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                     padding: const EdgeInsets.all(20.0),
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, int index) {
-                      return Text(snapshot.data[index].noOrder.toString());
+                      return infoPembayaran(snapshot.data[index]);
                     });
               } else if (snapshot.hasError) {
                 return Center(
