@@ -251,7 +251,7 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
               ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text("Error loading")));
             }
-            return const Center(child: CircularProgressIndicator());
+            return Expanded(child: const Center(child: CircularProgressIndicator()));
           },
         ),
       ]),
