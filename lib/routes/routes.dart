@@ -22,7 +22,7 @@ class Routes {
       case SplashScreen.routeName:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case MateriScreen.routeName:
-        return MaterialPageRoute(builder: (_) => const MateriScreen());
+        return MaterialPageRoute(builder: (_) => MateriScreen());
       case PrivasiScreen.routeName:
         return MaterialPageRoute(builder: (_) => PrivasiScreen());
       case TentangScreen.routeName:

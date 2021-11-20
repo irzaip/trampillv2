@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       getPages: [
         GetPage(name: "/", page: () => DashboardScreen()),
-        GetPage(name: "/materi", page: () => const MateriScreen()),
+        GetPage(name: "/materi", page: () => MateriScreen()),
         GetPage(name: "/home", page: () => const HomeScreenWidget()),
         GetPage(name: "/favorit", page: () => const FavoritScreen()),
         GetPage(name: "/materisaya", page: () => const MateriSayaScreen()),

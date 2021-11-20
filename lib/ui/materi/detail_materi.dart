@@ -116,7 +116,9 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(onPressed: () {}, child: Text("Buka Materi")),
+              ElevatedButton(onPressed: () {
+                Get.offNamed('/materi', arguments: materi);
+              }, child: Text("Buka Materi")),
               IconButton(
                   color: Colors.blueAccent,
                   onPressed: () {},
@@ -143,7 +145,7 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
       ),
       body: FutureBuilder(
         future: resultMateri,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
+        builder: (BuildContext context, AsyncSnapshot snapshot)  {
           if (snapshot.data != null) {
             return ListView.builder(
                 itemCount: snapshot.data.length + 1,
