@@ -18,6 +18,7 @@ dependencies:
   url_launcher: ^6.0.12
   get: ^4.3.8
   intl: any
+  youtube_player_flutter: ^8.0.0
 
 dev_dependencies:
   flutter_test:

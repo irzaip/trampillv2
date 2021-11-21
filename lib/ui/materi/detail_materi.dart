@@ -168,7 +168,7 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
                 const Text("Error loading. login First"),
                 ElevatedButton(
                   onPressed: () async {
-                    await Navigator.pushNamed(context, '/login');
+                    var result = await Get.toNamed('/login');
                     setState(() {});
                   },
                   child: const Text("Login"),

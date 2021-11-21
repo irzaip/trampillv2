@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trampillv2/api/class_pendaftaran.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+import 'package:get/get.dart';
 
 class MateriSayaScreen extends StatefulWidget {
   const MateriSayaScreen({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
     }
   }
 
-  Widget materiCard(judul, id) {
+  Widget materiCard(materi) {
   TextStyle bigfont = const TextStyle(
       fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold);
     return Card(
@@ -48,8 +49,10 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            Expanded(child: Text(judul, style: bigfont,)),
-            ElevatedButton(onPressed: () {}, child: const Text("Buka")),
+            Expanded(child: Text(materi.judul, style: bigfont,)),
+            ElevatedButton(onPressed: () {
+              Get.toNamed('/materi', arguments: materi);
+            }, child: const Text("Buka")),
           ],
         ),
       ),
@@ -70,8 +73,7 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, int index) {
                     return materiCard(
-                      snapshot.data[index].materi.judul.toString(), 
-                      snapshot.data[index].materi.id.toString());
+                      snapshot.data[index].materi);
                   });
             } else if (snapshot.hasError) {
               return Center(
@@ -80,7 +82,7 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
                   const Text("Error loading. login First"),
                   ElevatedButton(
                     onPressed: () async {
-                      await Navigator.pushNamed(context, '/login');
+                      await Get.toNamed('/login');
                       setState(() {});
                     },
                     child: const Text("Login"),

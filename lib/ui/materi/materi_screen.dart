@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:trampillv2/api/class_materi.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MateriScreen extends StatefulWidget {
   MateriScreen({Key? key}) : super(key: key);
@@ -20,13 +21,19 @@ class MateriScreen extends StatefulWidget {
 class _MateriScreenState extends State<MateriScreen> {
   late Future<Object> resultmateri;
   late Materi materi;
+  late Topic topic;
   final PageController _pageController = PageController();
+  TextStyle bigfont = const TextStyle(
+      fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold);
+  TextStyle mediumfont = const TextStyle(fontSize: 14, color: Colors.black);
+  TextStyle kategorifont = TextStyle(fontSize: 13, color: Colors.blueGrey);
+  
 
   @override
   void initState() {
-    super.initState();
     materi = Get.arguments;
     resultmateri = apiMainMateri(materi.id);
+    super.initState();
   }
 
   Future<List<Topic>> apiMainMateri(id) async {
@@ -52,6 +59,46 @@ class _MateriScreenState extends State<MateriScreen> {
     }
   }
 
+
+  Widget playYoutube(url_youtube, judul) {
+    String? videoId;
+    videoId = YoutubePlayer.convertUrlToId(url_youtube) ?? "";
+    YoutubePlayerController _controller = YoutubePlayerController(
+      initialVideoId: videoId,
+          flags: YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+    ),);
+
+    return YoutubePlayerBuilder(
+    player: YoutubePlayer(
+        controller: _controller,
+    ),
+    builder: (context, player){
+        return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+                Text(judul.toString(), style: bigfont),
+                SizedBox(height: 30,),
+                player,
+            ]);
+          }
+        );
+  }
+
+
+  Widget pageCard(topic) {
+    if (topic.jenis.toString() == 'Label') {
+      return Center(child: Text(topic.judul.toString(), style: bigfont,),);
+    } else if (topic.jenis.toString() == 'Link Video' && topic.link.toString().contains('youtube')) {
+      return playYoutube(topic.link.toString(), topic.judul.toString());
+    } else {
+      return Center(child: Text(topic.judul.toString(), style: mediumfont,),);
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +113,10 @@ class _MateriScreenState extends State<MateriScreen> {
                   controller: _pageController,
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, int index) {
-                    return Center(child: Text(snapshot.data[index].judul));
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: pageCard(snapshot.data[index]),
+                    );
                   });
             } else if (snapshot.hasError &&
                 snapshot.error.toString().contains('login')) {
@@ -75,8 +125,9 @@ class _MateriScreenState extends State<MateriScreen> {
                 children: [
                   Text(snapshot.error.toString()),
                   ElevatedButton(
-                      onPressed: () {
-                        Get.toNamed('/login');
+                      onPressed: () async {
+                        await Get.offAndToNamed('/login');
+                        setState(() {});
                       },
                       child: const Text("Login"))
                 ],

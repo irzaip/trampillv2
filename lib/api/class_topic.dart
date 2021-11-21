@@ -4,6 +4,7 @@ class Topic {
   final int materi;
   final int noUrut;
   final String judul;
+  final String jenis;
   final String label;
   final String link;
   final String isiTambahan;
@@ -13,6 +14,7 @@ class Topic {
     required this.materi,
     required this.noUrut,
     required this.judul,
+    required this.jenis,
     required this.label,
     required this.link,
     required this.isiTambahan,
@@ -24,6 +26,7 @@ class Topic {
       materi: json['materi'],
       noUrut: json['no_urut'],
       judul: json['judul'],
+      jenis: json['jenis'],
       label: json['label'] ?? "",
       link: json['link'] ?? "",
       isiTambahan: json['isi_tambahan'] ?? "",
