@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:trampillv2/api/class_materi.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MateriScreen extends StatefulWidget {
   MateriScreen({Key? key}) : super(key: key);
@@ -24,10 +25,10 @@ class _MateriScreenState extends State<MateriScreen> {
   late Topic topic;
   final PageController _pageController = PageController();
   TextStyle bigfont = const TextStyle(
-      fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold);
-  TextStyle mediumfont = const TextStyle(fontSize: 14, color: Colors.black);
+      fontSize: 24, color: Colors.black, fontWeight: FontWeight.bold);
+  TextStyle mediumfont = const TextStyle(fontSize: 18, color: Colors.black);
+  TextStyle linkfont = const TextStyle(fontSize: 16, color: Colors.blueGrey);
   TextStyle kategorifont = TextStyle(fontSize: 13, color: Colors.blueGrey);
-  
 
   @override
   void initState() {
@@ -59,45 +60,95 @@ class _MateriScreenState extends State<MateriScreen> {
     }
   }
 
-
   Widget playYoutube(url_youtube, judul) {
     String? videoId;
     videoId = YoutubePlayer.convertUrlToId(url_youtube) ?? "";
     YoutubePlayerController _controller = YoutubePlayerController(
       initialVideoId: videoId,
-          flags: YoutubePlayerFlags(
+      flags: YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
-    ),);
+      ),
+    );
 
     return YoutubePlayerBuilder(
-    player: YoutubePlayer(
-        controller: _controller,
-    ),
-    builder: (context, player){
-        return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-                Text(judul.toString(), style: bigfont),
-                SizedBox(height: 30,),
-                player,
-            ]);
-          }
-        );
+        player: YoutubePlayer(
+          controller: _controller,
+        ),
+        builder: (context, player) {
+          return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text(judul.toString(), style: bigfont),
+            SizedBox(
+              height: 30,
+            ),
+            player,
+          ]);
+        });
   }
 
-
+_launchURL(open_url) async {
+  var url = open_url.toString();
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
   Widget pageCard(topic) {
     if (topic.jenis.toString() == 'Label') {
-      return Center(child: Text(topic.judul.toString(), style: bigfont,),);
-    } else if (topic.jenis.toString() == 'Link Video' && topic.link.toString().contains('youtube')) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [ 
+          Text(
+          topic.judul.toString(),
+          style: bigfont,
+        ),
+        ],
+      );
+    } else if (topic.jenis.toString() == 'Link Video' &&
+        topic.link.toString().contains('youtube')) {
       return playYoutube(topic.link.toString(), topic.judul.toString());
+    } else if (topic.jenis.toString() == 'Konten Umum') {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+        Text(topic.judul.toString(), style: bigfont),
+        Text(topic.link.toString(), style: linkfont),
+        ElevatedButton(onPressed: () {
+          _launchURL(topic.link.toString());
+        }, child: Text("Buka")),
+        SizedBox(height: 20),
+        Text(topic.isiTambahan.toString(), style: mediumfont,)
+      ]);
+    } else if (topic.jenis.toString() == 'Tugas') {
+      return Center(child: Text(topic.judul.toString(), style: bigfont,));
+    } else if (topic.jenis.toString() == 'Quiz') {
+      return Center(child: Text(topic.judul.toString(), style: bigfont,));
+    } else if (topic.jenis.toString() == 'Feedback') {
+      return Center(child: Text(topic.judul.toString(), style: bigfont,));
+    } else if (topic.jenis.toString() == 'Url luar') {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+        Text(topic.judul.toString(), style: bigfont,),
+        Text(topic.link.toString(), style: mediumfont,),
+        ElevatedButton(onPressed: () {
+          _launchURL(topic.link.toString());
+        }, child: Text("Buka"))
+      ]);
+
+    } else if (topic.jenis.toString() == 'File') {
+      return Center(child: Text(topic.judul.toString()));
     } else {
-      return Center(child: Text(topic.judul.toString(), style: mediumfont,),);
+      return Center(
+        child: Text(
+          topic.judul.toString(),
+          style: mediumfont,
+        ),
+      );
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -143,19 +194,18 @@ class _MateriScreenState extends State<MateriScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ElevatedButton(
-              onPressed: () {
-                _pageController.previousPage(duration: Duration(seconds: 1), curve: Curves.easeInOut);
-              }, 
-              child: Icon(Icons.arrow_left)),
+                onPressed: () {
+                  _pageController.previousPage(
+                      duration: Duration(seconds: 1), curve: Curves.easeInOut);
+                },
+                child: Icon(Icons.arrow_left)),
+            ElevatedButton(onPressed: null, child: Icon(Icons.topic)),
             ElevatedButton(
-              onPressed: null, 
-              child: Icon(Icons.topic)),
-            ElevatedButton(
-              onPressed: () {
-                _pageController.nextPage(duration: Duration(seconds: 1), curve: Curves.easeInOut);
-              }, 
-              child: Icon(Icons.arrow_right)),
-
+                onPressed: () {
+                  _pageController.nextPage(
+                      duration: Duration(seconds: 1), curve: Curves.easeInOut);
+                },
+                child: Icon(Icons.arrow_right)),
           ],
         ),
       ),

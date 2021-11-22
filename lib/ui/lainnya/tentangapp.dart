@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class TentangAppScreen extends StatelessWidget {
@@ -15,11 +16,12 @@ class TentangAppScreen extends StatelessWidget {
         children: [
           ElevatedButton(
               onPressed: () {
+                Get.toNamed('/listkegiatan');
               },
               child: const Text("TESTING")),
           ElevatedButton(
               onPressed: () {
-                Navigator.popAndPushNamed(context, "/materisaya");
+                Get.toNamed('/kegiatan');
               },
               child: const Text("Hello")),
         ],
