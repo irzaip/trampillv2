@@ -37,7 +37,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
     return Card(
       elevation: 10,
       child: ListTile(
-        leading: Icon(Icons.payment),
+        leading: const Icon(Icons.payment),
         title: Text(pembayaran.noOrder.toString()),
         subtitle: Text(pembayaran.status.toString()),
       ),

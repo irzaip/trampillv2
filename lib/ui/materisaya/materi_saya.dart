@@ -63,7 +63,15 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("TRMPL"),
+        title: const Text("Materi Saya"),
+      actions: [
+        IconButton(
+          tooltip: "Favorit",
+          onPressed: () {
+          Get.toNamed('/favorit');
+        }, 
+        icon: Icon(Icons.favorite),),
+      ],
       ),
       body: FutureBuilder(
           future: pendaftaran(),

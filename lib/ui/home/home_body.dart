@@ -2,9 +2,12 @@ import 'dart:ui';
 import 'package:flutter/painting.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:trampillv2/api/class_kegiatan.dart';
+import 'package:trampillv2/api/api_listkegiatan.dart';
 import 'package:trampillv2/api/api_listmateri.dart';
 import 'package:trampillv2/api/class_materi.dart';
 import 'package:get/get.dart';
+import 'package:trampillv2/values/fontstyle.dart';
 
 class HomeBodyWidget extends StatefulWidget {
   const HomeBodyWidget({Key? key}) : super(key: key);
@@ -14,19 +17,6 @@ class HomeBodyWidget extends StatefulWidget {
 
 class _HomeBodyWidgetState extends State<HomeBodyWidget> {
   late Future<List<Materi>> listMateri;
-  TextStyle bigfont = const TextStyle(
-      fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold);
-  TextStyle mediumfont = const TextStyle(fontSize: 14, color: Colors.black);
-  TextStyle kategorifont = TextStyle(fontSize: 13, color: Colors.blueGrey);
-  TextStyle pengajar = const TextStyle(
-      fontSize: 14, color: Colors.blueGrey, fontWeight: FontWeight.w700);
-  TextStyle hargafont = const TextStyle(
-      fontSize: 20, color: Colors.redAccent, fontWeight: FontWeight.w700);
-  TextStyle hargacoret = const TextStyle(
-      fontSize: 20,
-      color: Colors.redAccent,
-      fontWeight: FontWeight.w300,
-      decoration: TextDecoration.lineThrough);
   ScrollController controller = ScrollController();
   bool closeTopList = false;
   double listHeight = 200;
@@ -37,11 +27,8 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
     //super.initState();
     listMateri = apiListMateri(context);
     controller.addListener(() {
-
       setState(() {
-        print(controller.offset.toString());
         closeTopList = controller.offset > 0;
-        print(closeTopList.toString());
         // listHeight = 200 - (controller.offset * 10);
         // if (listHeight < 0) {
         //   listHeight = 0;
@@ -110,7 +97,7 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
                   const SizedBox(
                     width: 20,
                   ),
-                  Icon(Icons.favorite),
+                  const Icon(Icons.favorite),
                   const SizedBox(
                     width: 20,
                   ),
@@ -134,12 +121,12 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
                           materi.pendek,
                           style: mediumfont,
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           "Pengajar : " + materi.pengajar,
                           style: pengajar,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
@@ -159,7 +146,7 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
                                     discount(materi.harga, materi.discount),
                                     style: hargafont,
                                   ),
-                                  SizedBox(width: 100),
+                                  const SizedBox(width: 100),
                                 ],
                               ),
                             ),
@@ -174,7 +161,7 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
                                         setState(() {});
                                       },
                                       child: const Text("Buka")),
-                                  SizedBox(width: 10),
+                                  const SizedBox(width: 10),
                                 ],
                               ),
                             ),
@@ -204,12 +191,12 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
     return Container(
       child: Column(children: [
         AnimatedOpacity(
-          duration: Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 200),
           opacity: closeTopList ? 0 : 1,
           child: AnimatedContainer(
               height: listHeight,
               alignment: Alignment.topCenter,
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
               child: ListKegiatan()),
         ),
         FutureBuilder(
@@ -219,7 +206,7 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
               return Expanded(
                 child: ListView.builder(
                     controller: controller,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, int index) {
                       return materiCard(
@@ -251,7 +238,8 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
               ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text("Error loading")));
             }
-            return Expanded(child: const Center(child: CircularProgressIndicator()));
+            return const Expanded(
+                child: Center(child: CircularProgressIndicator()));
           },
         ),
       ]),
@@ -267,57 +255,72 @@ class ListKegiatan extends StatefulWidget {
 }
 
 class _ListKegiatanState extends State<ListKegiatan> {
+  late Future<List<Kegiatan>> kegiatans;
+
   @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double scrollheight = size.height * 0.25;
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      scrollDirection: Axis.horizontal,
-      child: Container(
-        child: FittedBox(
-          child: Row(
-            children: [
-              Container(
-                height: scrollheight,
-                width: 200,
-                child: Text("Hello"),
-                color: Colors.cyan,
-              ),
-              Container(
-                height: scrollheight,
-                width: 200,
-                child: Text("Hello"),
-                color: Colors.deepPurple,
-              ),
-              Container(
-                height: scrollheight,
-                width: 200,
-                child: Text("Hello"),
-                color: Colors.indigo,
-              ),
-              Container(
-                height: scrollheight,
-                width: 200,
-                child: Text("Hello"),
-                color: Colors.cyan,
-              ),
-              Container(
-                height: scrollheight,
-                width: 200,
-                child: Text("Hello"),
-                color: Colors.deepPurple,
-              ),
-              Container(
-                height: scrollheight,
-                width: 200,
-                child: Text("Hello"),
-                color: Colors.indigo,
-              ),
-            ],
+  void initState() {
+    kegiatans = getListKegiatan();
+  }
+
+
+  Widget CardKegiatan(kegiatan) {
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed('/kegiatan', arguments: kegiatan);
+      },
+      child: Card(
+        color: Colors.lightBlue[50],
+        borderOnForeground: true,
+        elevation: 10,
+        child: SizedBox(
+          width: 200,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Kegiatan: ", style: titlefont,),
+                Text(kegiatan.judulAcara),
+                SizedBox(height: 8,),
+                Text("Tanggal :", style: titlefont),
+                Text(toDate(kegiatan.tanggalMulai)),
+                Text('s/d'),
+                Text(toDate(kegiatan.tanggalSelesai)),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double scrollheight = size.height * 0.25;
+    return FutureBuilder(
+        future: kegiatans,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data != null) {
+            return ListView.separated(
+                scrollDirection: Axis.horizontal,
+                separatorBuilder: (context, _) => const SizedBox(
+                      width: 10,
+                    ),
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, int index) {
+                  return CardKegiatan(snapshot.data[index]);
+                });
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 }

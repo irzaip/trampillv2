@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             TextField(
               controller: _controllerUser,
               onChanged: (String value) {
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: 'username',
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             TextField(
               controller: _controllerPass,
               onChanged: (String value) {
@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: 'Password',
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             ElevatedButton(
                 onPressed: () async {
                   SharedPreferences prefs = await SharedPreferences.getInstance();

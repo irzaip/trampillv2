@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'dart:io';
+import 'package:get/get.dart';
 
 class FavoritScreen extends StatefulWidget {
   const FavoritScreen({Key? key}) : super(key: key);
@@ -38,7 +39,7 @@ class _FavoritScreenState extends State<FavoritScreen> {
       elevation: 10,
       child: ListTile(
         title: Text(materi.judul),
-        leading: Icon(Icons.arrow_forward),
+        leading: const Icon(Icons.arrow_forward),
       ),
     );
   }
@@ -47,7 +48,10 @@ class _FavoritScreenState extends State<FavoritScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("TRMPL"),
+        leading: IconButton(onPressed: () {
+          Get.offNamed('/materisaya');
+        }, icon: Icon(Icons.arrow_left)),
+        title: const Text("Favorit"),
       ),
       body: FutureBuilder(
             future: favorit(),
@@ -67,7 +71,7 @@ class _FavoritScreenState extends State<FavoritScreen> {
                     const Text("Error loading. login First"),
                     ElevatedButton(
                       onPressed: () async {
-                        await Navigator.pushNamed(context, '/login');
+                        await Get.to('/login');
                         setState(() {});
                       },
                       child: const Text("Login"),

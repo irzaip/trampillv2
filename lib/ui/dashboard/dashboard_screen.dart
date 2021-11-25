@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trampillv2/api/httpapi.dart';
-import 'package:trampillv2/ui/favorit/favorit.dart';
 import 'package:trampillv2/ui/home/home_screen.dart';
+import 'package:trampillv2/ui/iqro/iqro.dart';
 import 'package:trampillv2/ui/lainnya/lainnya.dart';
 import 'package:trampillv2/ui/materisaya/materi_saya.dart';
 import 'package:trampillv2/ui/pembayaran/pembayaran_screen.dart';
@@ -10,7 +10,7 @@ import 'package:trampillv2/ui/pembayaran/pembayaran_screen.dart';
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key? key}) : super(key: key);
   static const String routeName = '/dashboard';
-  var loggedin;
+  late var loggedin;
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<Widget> _dashboardBodyWidgets = <Widget>[
     const HomeScreenWidget(),
     const MateriSayaScreen(),
-    const FavoritScreen(),
+    IqroScreen(),
     const PembayaranScreen(),
     const LainnyaWidget(),
   ];

@@ -10,9 +10,10 @@ import 'package:get/get.dart';
 import 'package:trampillv2/api/class_materi.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:trampillv2/values/fontstyle.dart';
 
 class MateriScreen extends StatefulWidget {
-  MateriScreen({Key? key}) : super(key: key);
+  const MateriScreen({Key? key}) : super(key: key);
   static const routeName = '/materi';
 
   @override
@@ -24,11 +25,6 @@ class _MateriScreenState extends State<MateriScreen> {
   late Materi materi;
   late Topic topic;
   final PageController _pageController = PageController();
-  TextStyle bigfont = const TextStyle(
-      fontSize: 24, color: Colors.black, fontWeight: FontWeight.bold);
-  TextStyle mediumfont = const TextStyle(fontSize: 18, color: Colors.black);
-  TextStyle linkfont = const TextStyle(fontSize: 16, color: Colors.blueGrey);
-  TextStyle kategorifont = TextStyle(fontSize: 13, color: Colors.blueGrey);
 
   @override
   void initState() {
@@ -65,7 +61,7 @@ class _MateriScreenState extends State<MateriScreen> {
     videoId = YoutubePlayer.convertUrlToId(url_youtube) ?? "";
     YoutubePlayerController _controller = YoutubePlayerController(
       initialVideoId: videoId,
-      flags: YoutubePlayerFlags(
+      flags: const YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
       ),
@@ -78,7 +74,7 @@ class _MateriScreenState extends State<MateriScreen> {
         builder: (context, player) {
           return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text(judul.toString(), style: bigfont),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             player,
@@ -117,8 +113,8 @@ _launchURL(open_url) async {
         Text(topic.link.toString(), style: linkfont),
         ElevatedButton(onPressed: () {
           _launchURL(topic.link.toString());
-        }, child: Text("Buka")),
-        SizedBox(height: 20),
+        }, child: const Text("Buka")),
+        const SizedBox(height: 20),
         Text(topic.isiTambahan.toString(), style: mediumfont,)
       ]);
     } else if (topic.jenis.toString() == 'Tugas') {
@@ -135,7 +131,7 @@ _launchURL(open_url) async {
         Text(topic.link.toString(), style: mediumfont,),
         ElevatedButton(onPressed: () {
           _launchURL(topic.link.toString());
-        }, child: Text("Buka"))
+        }, child: const Text("Buka"))
       ]);
 
     } else if (topic.jenis.toString() == 'File') {
@@ -186,7 +182,7 @@ _launchURL(open_url) async {
             } else if (snapshot.hasError) {
               return Center(child: Text(snapshot.error.toString()));
             } else {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
           }),
       bottomNavigationBar: BottomAppBar(
@@ -196,16 +192,16 @@ _launchURL(open_url) async {
             ElevatedButton(
                 onPressed: () {
                   _pageController.previousPage(
-                      duration: Duration(seconds: 1), curve: Curves.easeInOut);
+                      duration: const Duration(seconds: 1), curve: Curves.easeInOut);
                 },
-                child: Icon(Icons.arrow_left)),
-            ElevatedButton(onPressed: null, child: Icon(Icons.topic)),
+                child: const Icon(Icons.arrow_left)),
+            const ElevatedButton(onPressed: null, child: Icon(Icons.topic)),
             ElevatedButton(
                 onPressed: () {
                   _pageController.nextPage(
-                      duration: Duration(seconds: 1), curve: Curves.easeInOut);
+                      duration: const Duration(seconds: 1), curve: Curves.easeInOut);
                 },
-                child: Icon(Icons.arrow_right)),
+                child: const Icon(Icons.arrow_right)),
           ],
         ),
       ),
