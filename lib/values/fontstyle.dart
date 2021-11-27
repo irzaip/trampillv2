@@ -21,8 +21,12 @@ const TextStyle hargacoret = TextStyle(
     decoration: TextDecoration.lineThrough);
 const TextStyle linkfont = TextStyle(fontSize: 16, color: Colors.blueGrey);
 
+  /// Fungsi Merubah String json <2021-04-01 00:00:00> datetime menjadi bentuk dd-mmm-yyyy
   String toDate(dstr) {
     var parsedDate = DateTime.parse(dstr);
     final formater = DateFormat('dd-MMM-yyyy');
     return formater.format(parsedDate).toString();
   }
+
+
+  

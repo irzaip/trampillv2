@@ -19,6 +19,7 @@ dependencies:
   get: ^4.3.8
   intl: any
   youtube_player_flutter: ^8.0.0
+  random_color: ^1.0.6-nullsafety
 
 dev_dependencies:
   flutter_test:

@@ -63,7 +63,7 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Materi Saya"),
+        title: const Text("Materi terdaftar saya"),
       actions: [
         IconButton(
           tooltip: "Favorit",

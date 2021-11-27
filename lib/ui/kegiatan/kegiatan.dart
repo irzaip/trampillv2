@@ -1,14 +1,12 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:trampillv2/api/class_kegiatan.dart';
 import 'package:flutter/foundation.dart';
 import 'package:trampillv2/values/fontstyle.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:trampillv2/api/api_listkegiatan.dart';
 import 'package:get/get.dart';
 
 class KegiatanScreen extends StatefulWidget {
-  KegiatanScreen({Key? key}) : super(key: key);
+  const KegiatanScreen({Key? key}) : super(key: key);
   static const routeName = '/kegiatan';
 
   @override
@@ -34,7 +32,7 @@ class _KegiatanScreenState extends State<KegiatanScreen> {
         actions: [
           IconButton(onPressed: () {
             Get.offNamed('/listkegiatan');
-          }, icon: Icon(Icons.list))
+          }, icon: const Icon(Icons.list))
         ],
       ),
       body: FutureBuilder(
@@ -64,7 +62,7 @@ class _KegiatanScreenState extends State<KegiatanScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "Kegiatan :",
               style: bigfont,
             ),
@@ -72,18 +70,18 @@ class _KegiatanScreenState extends State<KegiatanScreen> {
               snapshot.data.judulAcara,
               style: titlefont,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               "Status :",
               style: bigfont,
             ),
             Text(snapshot.data.statusAcara, style: mediumfont),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               "Judul Materi :",
               style: bigfont,
             ),
@@ -91,18 +89,18 @@ class _KegiatanScreenState extends State<KegiatanScreen> {
               snapshot.data.judulMateri,
               style: mediumfont,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text("Deskripsi :", style: bigfont),
+            const Text("Deskripsi :", style: bigfont),
             Text(
               snapshot.data.deskripsi,
               style: mediumfont,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               "Rating :",
               style: bigfont,
             ),
@@ -110,21 +108,21 @@ class _KegiatanScreenState extends State<KegiatanScreen> {
               snapshot.data.rating.toString(),
               style: mediumfont,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text("Tanggal Mulai :", style: bigfont),
+            const Text("Tanggal Mulai :", style: bigfont),
             Text(toDate(snapshot.data.tanggalMulai)),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               "Tanggal Selesai :",
               style: bigfont,
             ),
             Text(toDate(snapshot.data.tanggalSelesai)),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               "Url Donasi",
               style: bigfont,
             ),

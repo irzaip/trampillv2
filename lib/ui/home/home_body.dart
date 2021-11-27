@@ -8,6 +8,9 @@ import 'package:trampillv2/api/api_listmateri.dart';
 import 'package:trampillv2/api/class_materi.dart';
 import 'package:get/get.dart';
 import 'package:trampillv2/values/fontstyle.dart';
+import 'dart:math';
+import 'package:random_color/random_color.dart';
+
 
 class HomeBodyWidget extends StatefulWidget {
   const HomeBodyWidget({Key? key}) : super(key: key);
@@ -250,12 +253,33 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
 class ListKegiatan extends StatefulWidget {
   ListKegiatan({Key? key}) : super(key: key);
 
+
   @override
   State<ListKegiatan> createState() => _ListKegiatanState();
 }
 
 class _ListKegiatanState extends State<ListKegiatan> {
   late Future<List<Kegiatan>> kegiatans;
+  // var color_index = 0;
+  // var color_list = [
+  //   Colors.grey[100],
+  //   Colors.indigo[50],
+  //   Colors.lightBlue[50],
+  // ];
+
+
+  // Colors cycleColor() {
+  //   var cardcolor = color_list[color_index];
+  //   color_index = color_index++;
+  //   if (color_index > color_list.length) {
+  //     color_index = 0;
+  //   }  
+  //   return cardcolor;
+  // }
+
+  RandomColor _randomColor = RandomColor();
+
+
 
   @override
   void initState() {
@@ -263,13 +287,17 @@ class _ListKegiatanState extends State<ListKegiatan> {
   }
 
 
+
   Widget CardKegiatan(kegiatan) {
+      Color _color = _randomColor.randomColor(
+    colorBrightness: ColorBrightness.veryLight
+  );
     return GestureDetector(
       onTap: () {
         Get.toNamed('/kegiatan', arguments: kegiatan);
       },
       child: Card(
-        color: Colors.lightBlue[50],
+        color: _color,
         borderOnForeground: true,
         elevation: 10,
         child: SizedBox(
@@ -280,12 +308,12 @@ class _ListKegiatanState extends State<ListKegiatan> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Kegiatan: ", style: titlefont,),
+                const Text("Kegiatan: ", style: titlefont,),
                 Text(kegiatan.judulAcara),
-                SizedBox(height: 8,),
-                Text("Tanggal :", style: titlefont),
+                const SizedBox(height: 8,),
+                const Text("Tanggal :", style: titlefont),
                 Text(toDate(kegiatan.tanggalMulai)),
-                Text('s/d'),
+                const Text('s/d'),
                 Text(toDate(kegiatan.tanggalSelesai)),
               ],
             ),

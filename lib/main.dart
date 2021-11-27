@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/syaratketentuan", page: () => SyaratKetentuanScreen()),
         GetPage(name: "/tentang", page: () => TentangScreen()),
         GetPage(name: "/tentangapp", page: () => const TentangAppScreen()),
-        GetPage(name:"/kegiatan", page: () => KegiatanScreen()),
+        GetPage(name:"/kegiatan", page: () => const KegiatanScreen()),
         GetPage(name: "/listkegiatan", page: () => ListKegiatanScreen()),
       ],
       debugShowCheckedModeBanner: false,

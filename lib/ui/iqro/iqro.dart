@@ -12,6 +12,6 @@ class IqroScreen extends StatefulWidget {
 class _IqroScreenState extends State<IqroScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text("IQRO1"));
+    return Container(child: const Text("IQRO1"));
   }
 }

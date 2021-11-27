@@ -49,8 +49,8 @@ class _FavoritScreenState extends State<FavoritScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: () {
-          Get.offNamed('/materisaya');
-        }, icon: Icon(Icons.arrow_left)),
+          Get.back();
+        }, icon: const Icon(Icons.arrow_left)),
         title: const Text("Favorit"),
       ),
       body: FutureBuilder(

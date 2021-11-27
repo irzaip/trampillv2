@@ -160,9 +160,18 @@ _launchURL(open_url) async {
                   controller: _pageController,
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: pageCard(snapshot.data[index]),
+                    return Container(
+                      color: Colors.grey,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: pageCard(snapshot.data[index]),
+                          ),
+                        ),
+                      ),
                     );
                   });
             } else if (snapshot.hasError &&

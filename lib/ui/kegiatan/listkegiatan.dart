@@ -72,7 +72,7 @@ void initState() {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "Kegiatan :",
               style: bigfont,
             ),
@@ -80,18 +80,18 @@ void initState() {
               snapshot.judulAcara,
               style: titlefont,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               "Status :",
               style: bigfont,
             ),
             Text(snapshot.statusAcara, style: mediumfont),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               "Judul Materi :",
               style: bigfont,
             ),
@@ -99,7 +99,7 @@ void initState() {
               snapshot.judulMateri,
               style: mediumfont,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             // Text("Deskripsi :", style: bigfont),
@@ -118,18 +118,18 @@ void initState() {
             //   snapshot.rating.toString(),
             //   style: mediumfont,
             // ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text("Tanggal Mulai :", style: bigfont),
+            const Text("Tanggal Mulai :", style: bigfont),
             Text(toDate(snapshot.tanggalMulai)),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               "Tanggal Selesai :",
               style: bigfont,
             ),
             Text(toDate(snapshot.tanggalSelesai)),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             // Text(
