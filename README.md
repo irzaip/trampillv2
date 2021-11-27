@@ -11,8 +11,8 @@ Improvement is needed.
 
 Contributors
 ------------
-Irza Pulungan
-Eris Riso
-Riska Abdullah
-Muhammad Asman
-Imam Akbar
+  * Irza Pulungan
+  * Eris Riso
+  * Riska Abdullah
+  * Muhammad Asman
+  * Imam Akbar
