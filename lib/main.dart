@@ -11,15 +11,17 @@ import 'package:trampillv2/ui/lainnya/tentang.dart';
 import 'package:trampillv2/ui/lainnya/tentangapp.dart';
 import 'package:trampillv2/ui/login/forgot_screen.dart';
 import 'package:trampillv2/ui/login/login_screen.dart';
+import 'package:trampillv2/ui/login/register_screen.dart';
 import 'package:trampillv2/ui/materi/detail_materi.dart';
 import 'package:trampillv2/ui/materi/materi_screen.dart';
 import 'package:trampillv2/ui/materisaya/materi_saya.dart';
 import 'package:trampillv2/ui/pembayaran/pembayaran_screen.dart';
 import 'package:trampillv2/ui/kegiatan/kegiatan.dart';
 import 'ui/kegiatan/listkegiatan.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const  MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/lainnya", page: () => const LainnyaWidget()),
         GetPage(name: "/login", page: () => const LoginScreen()),
         GetPage(name: "/detailmateri", page: () => const DetailMateriScreen()),
-        GetPage(name: "/forgot", page: ()=> const ForgotScreen()),
+        GetPage(name: "/forgot", page: () => const ForgotScreen()),
         GetPage(name: "/hubungikami", page: () => HubungiKamiScreen()),
         GetPage(name: "/privasi", page: () => PrivasiScreen()),
         GetPage(name: "/syaratketentuan", page: () => SyaratKetentuanScreen()),
@@ -46,10 +48,10 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/tentangapp", page: () => const TentangAppScreen()),
         GetPage(name:"/kegiatan", page: () => const KegiatanScreen()),
         GetPage(name: "/listkegiatan", page: () => ListKegiatanScreen()),
+        GetPage(name: "/register", page: () => const RegisterScreen()),
       ],
       debugShowCheckedModeBanner: false,
       // onGenerateRoute: Routes.generateRoute,
     );
   }
 }
-
