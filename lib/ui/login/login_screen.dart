@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trampillv2/api/httpapi.dart';
 
@@ -52,7 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            const SizedBox(height: 30,),
+            const SizedBox(
+              height: 30,
+            ),
             TextField(
               controller: _controllerUser,
               onChanged: (String value) {
@@ -64,7 +67,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: 'username',
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             TextField(
               controller: _controllerPass,
               onChanged: (String value) {
@@ -76,17 +81,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: 'Password',
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             ElevatedButton(
                 onPressed: () async {
-                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
                   try {
                     loggedin = await sendlogin(fUsername, fPassword);
 
                     if (loggedin == true) {
                       prefs.setString("username", fUsername);
                       prefs.setString("password", fPassword);
-                      
+
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text("Login Sukses."),
                       ));
@@ -94,8 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.pop(context);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text(
-                            "Login Gagal ! - Username or Password Error"),
+                        content:
+                            Text("Login Gagal ! - Username or Password Error"),
                       ));
                     }
                   } catch (e) {
@@ -117,9 +125,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.pop(context);
                 },
                 child: const Text("LOGOUT")),
-                ElevatedButton(
-                 onPressed: () { },
-                 child: const Text("REGISTER"))
+            ElevatedButton(
+                onPressed: () {
+                  Get.toNamed('/register');
+                },
+                child: const Text("REGISTER"))
           ],
         ),
       ),

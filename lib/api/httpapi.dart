@@ -59,9 +59,6 @@ Future<bool> sendlogin(String username, String password) async {
   } catch (e) { throw("Error connection");}
 }
 
-
-
-
 Future<String> refreshToken(token) async {
   final uri = Uri.parse('https://neo.trampill.com/api/token/refresh/');
 
@@ -84,4 +81,27 @@ Future<String> refreshToken(token) async {
 
      return "error";
    }
+}
+
+
+
+Future<bool?> register(
+    String username, String email, String password, String confrimpass) async {
+  var uri = Uri.parse('https://neo.trampill.com/api/register/');
+
+  var data = {
+    'username': username.toString(),
+    'password': password.toString(),
+    'confirm_pass': confrimpass.toString(),
+    'email': email.toString(),
+  };
+  var bod = jsonEncode(data);
+
+  var response = await http.post(
+    uri,
+    headers: {"Content-Type": "application/json"},
+    body: bod,
+  );
+
+  response.body;
 }
