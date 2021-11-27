@@ -8,7 +8,6 @@ import 'package:trampillv2/api/api_listmateri.dart';
 import 'package:trampillv2/api/class_materi.dart';
 import 'package:get/get.dart';
 import 'package:trampillv2/values/fontstyle.dart';
-import 'dart:math';
 import 'package:random_color/random_color.dart';
 
 
