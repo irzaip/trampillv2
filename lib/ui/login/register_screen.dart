@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trampillv2/api/httpapi.dart';
+import 'package:get/get.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -107,20 +108,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        register(
+
+                        int? result = await register(
                             usernameController.text,
                             emailController.text,
                             passwordController.text,
                             confirmpassController.text);
 
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text("Register Berhasil."),
-                        ));
+                        var status = "";
+                        if (result == 1) {
+                          status =
+                              "Username sudah terpakai, ganti username anda.";
+                        } else if (result == 2) {
+                          status = "Password anda tidak sama";
+                        } else if (result == 3) {
+                          status = "Masukkan email yang valid";
+                        } else if (result == 0) {
+                          status = "Sukses registrasi, silahkan check email";
+                          Get.back();
+                        } else {
+                          status = "Unknown Error";
+                        }
 
-                        Navigator.pop(
-                          context,
+                        Get.snackbar(
+                          "STATUS",
+                          status,
+                          icon: Icon(Icons.person, color: Colors.white),
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.green,
+                          borderRadius: 20,
+                          margin: EdgeInsets.all(15),
+                          colorText: Colors.white,
+                          duration: Duration(seconds: 4),
+                          isDismissible: true,
+                          dismissDirection: SnackDismissDirection.HORIZONTAL,
+                          forwardAnimationCurve: Curves.easeOutBack,
                         );
+
+                        //Get.back();
+
                       } else {
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(
