@@ -22,7 +22,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   late List<Materi> fullList;
   String filterjudul = "";
   String valueText = "";
-  List<String> kategories = []; 
+  List<String> kategories = [];
   String _selectedKategories = "";
   double listHeight = 200;
   double topContainer = 0;
@@ -33,7 +33,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     //super.initState();
     listMateri = apiListMateri(context);
   }
-
 
   /// Fungsi menghitung discount dan menampilkan dalam bentuk string
   String hitungharga(harga, discount) {
@@ -74,87 +73,98 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     }
   }
 
-Future<void> _displayTextInputDialog(BuildContext context) async {
-   return showDialog(
-       context: context,
-       builder: (context) {
-         return AlertDialog(
-           title: const Text('Mencari'),
-           content: TextField(
-             onChanged: (value) {
-               setState(() {
-                 filterjudul = value.toLowerCase();
-               });
-             },
-             controller: _textFieldController,
-             decoration: const InputDecoration(hintText: "cari text..."),
-           ),
-           actions: <Widget>[
-             ElevatedButton(
-               child: Text('OK'),
-               onPressed: () {
-                 setState(() {
-                   Navigator.pop(context);
-                 });
-               },
-             ),
-              ElevatedButton(onPressed: () {
+  /// Memfilter Judul Materi berdasarkan String yang di ketik dari
+  /// TextField yang berada pada Alert
+  /// Proses pencarian berdasarkan variabel filterjudul
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Mencari'),
+            content: TextField(
+              onChanged: (value) {
                 setState(() {
-                  _selectedKategories = "";
-                  filterjudul = "";
-                  Navigator.pop(context);
+                  filterjudul = value.toLowerCase();
                 });
-              }, child: const Text("Reset"))
-           ],
-         );
-       });
- }
+              },
+              controller: _textFieldController,
+              decoration: const InputDecoration(hintText: "cari text..."),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: Text('OK'),
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _selectedKategories = "";
+                      filterjudul = "";
+                      Navigator.pop(context);
+                    });
+                  },
+                  child: const Text("Reset"))
+            ],
+          );
+        });
+  }
 
-Future<void> _filterByCategory() async {
+  /// Memfilter listMateri bedasarkan Tags yang ada pada data list.
+  /// Bagian awal mengkonversi Future list menjadi list biasa
+  /// Lalu membuat sebuat list berisikan data-data Tag (data)
+  /// setelah itu proses SET agar tidak ada duplikasi lalu masukkan ke
+  /// variabel kategories
+  Future<void> _filterByCategory() async {
     kategories = [];
     fullList = await listMateri;
-    var data = []; 
+    var data = [];
     fullList.forEach((element) {
-        data.addAll(element.tags.cast().toList());
+      data.addAll(element.tags.cast().toList());
     });
     data = data.toSet().toList();
     data.forEach((value) {
       kategories.add(value.toString());
     });
-    if (_selectedKategories == "") { _selectedKategories = kategories[0].toString();}
+    if (_selectedKategories == "") {
+      _selectedKategories = kategories[0].toString();
+    }
     filterjudul = "";
-   return showDialog(
-       context: context,
-       builder: (context) {         
-         return AlertDialog(
-           title: const Text('Filter berdasarkan kategori'),
-           content: DropdownButton<String>(
-             value: _selectedKategories,
-             items: kategories.map((value) {
-               return DropdownMenuItem(child: new Text(value), value: value);
-             }).toList(),
-             onChanged: (newvalue) {
-               setState(() {
-                _selectedKategories = newvalue.toString();  
-               });
-               Navigator.pop(context);
-             },
-           ),
-           actions: [
-             ElevatedButton(
-               onPressed: (){
-                 setState(() {
-                   _selectedKategories = "";
-                   filterjudul = "";
-                   Navigator.pop(context);
-                 });
-               }, child: const Text("Reset"))
-           ],
-         );
-       });
- }
-
-
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Filter berdasarkan kategori'),
+            content: DropdownButton<String>(
+              value: _selectedKategories,
+              items: kategories.map((value) {
+                return DropdownMenuItem(child: new Text(value), value: value);
+              }).toList(),
+              onChanged: (newvalue) {
+                setState(() {
+                  _selectedKategories = newvalue.toString();
+                });
+                Navigator.pop(context);
+              },
+            ),
+            actions: [
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _selectedKategories = "";
+                      filterjudul = "";
+                      Navigator.pop(context);
+                    });
+                  },
+                  child: const Text("Reset"))
+            ],
+          );
+        });
+  }
 
   /// menampilkan card listmateri
   Widget materiCard(context, Materi materi) {
@@ -253,15 +263,6 @@ Future<void> _filterByCategory() async {
         ));
   }
 
-  double calcheight(value) {
-    var height;
-    height = 200 - value;
-    if (height < 0) {
-      height = 0;
-    }
-    return height;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -288,18 +289,23 @@ Future<void> _filterByCategory() async {
               future: listMateri,
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.data != null) {
+                  /* 
+                  Proses Filtering dan Pengolahan ada di bagian ini. 
+                  */
                   var mydata = [];
                   print(filterjudul);
                   print(_selectedKategories);
                   snapshot.data.forEach((e) => {
-
-                        if (_selectedKategories == "" && (filterjudul == "" || e.judul.toLowerCase().contains(filterjudul))) 
-                        {
-                          mydata.add(e)
-                        } else if (filterjudul == "" && e.tags.cast().toList().contains(_selectedKategories)) {
-                          mydata.add(e)
-                        }
-
+                        if (_selectedKategories == "" &&
+                            (filterjudul == "" ||
+                                e.judul.toLowerCase().contains(filterjudul)))
+                          {mydata.add(e)}
+                        else if (filterjudul == "" &&
+                            e.tags
+                                .cast()
+                                .toList()
+                                .contains(_selectedKategories))
+                          {mydata.add(e)}
                       });
                   return Expanded(
                       child: ListView.builder(
@@ -350,6 +356,8 @@ Future<void> _filterByCategory() async {
         ));
   }
 
+  /// Ini berisikan Bagian Kegiatan yang bisa di scroll
+  /// terdiri dari AnimatedContainer
   AnimatedContainer scrollableKegiatan() {
     return AnimatedContainer(
         height: listHeight,
@@ -359,6 +367,8 @@ Future<void> _filterByCategory() async {
   }
 }
 
+/// Class yang bertanggung jawab untuk Rendering Kegiatan pada awal Listview
+/// semua berdasarkan ketinggian 200
 class ListKegiatan extends StatefulWidget {
   ListKegiatan({Key? key}) : super(key: key);
 
@@ -414,6 +424,8 @@ class _ListKegiatanState extends State<ListKegiatan> {
     );
   }
 
+  /// Ini adalah bagian build dark list kegiatan.
+  /// FutureBuilder ditambah dengan ListView
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
