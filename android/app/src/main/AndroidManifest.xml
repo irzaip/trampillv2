@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.trampillv2">
+    package="com.trampill.trampill">
    <application
-        android:label="trampillv2"
+        android:label="trampill"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

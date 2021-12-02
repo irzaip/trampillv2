@@ -13,7 +13,7 @@ class HubungiKamiScreen extends StatelessWidget {
 ### asman13300045@gmail.com - M. Asman
 ### erisriso@gmail.com - Eris Riso
 ### alternative.xen@gmail.com - Riska Abdullah
-
+### Imam Akbar Mega Antariksa
   
   """;
   @override
@@ -22,7 +22,7 @@ class HubungiKamiScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Hubungi Kami"),
       ),
-      backgroundColor: Colors.indigo,
+      backgroundColor: Colors.white,
       body: Container(
         padding: const EdgeInsets.fromLTRB(20, 30, 30, 30),
         alignment: Alignment.topLeft,

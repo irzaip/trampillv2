@@ -95,22 +95,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       prefs.setString("username", fUsername);
                       prefs.setString("password", fPassword);
 
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text("Login Sukses."),
-                      ));
-
-                      Navigator.pop(context);
+                      Get.back(result: "success");
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content:
-                            Text("Login Gagal ! - Username or Password Error"),
-                      ));
+                      Get.snackbar("Status", "Login Gagal - userid atau password salah!",
+                        snackPosition: SnackPosition.BOTTOM,
+                        );
                     }
                   } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text("Error Connect to server"),
-                    ));
-                    Navigator.pop(context);
+                    Get.snackbar("Status", "Error connecting server, please check internet.",
+                    snackPosition: SnackPosition.BOTTOM);
                   }
                   setState(() {});
                 },

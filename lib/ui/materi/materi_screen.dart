@@ -176,18 +176,29 @@ _launchURL(open_url) async {
                   });
             } else if (snapshot.hasError &&
                 snapshot.error.toString().contains('login')) {
-              return Center(
-                  child: Column(
+              return Column(
                 children: [
-                  Text(snapshot.error.toString()),
-                  ElevatedButton(
-                      onPressed: () async {
-                        await Get.offAndToNamed('/login');
-                        setState(() {});
-                      },
-                      child: const Text("Login"))
+                  Expanded(
+                    child: Center(
+                        child: Column(
+                      children: [
+                        Text(snapshot.error.toString()),
+                        ElevatedButton(
+                            onPressed: () async {
+                              var result = await Get.toNamed('/login');
+                              if (result  == "success") {
+                              Get.back();
+                              Get.snackbar("Status", "Login Berhasil",
+                                snackPosition: SnackPosition.BOTTOM);
+                  
+                              }
+                            },
+                            child: const Text("Login"))
+                      ],
+                    )),
+                  ),
                 ],
-              ));
+              );
             } else if (snapshot.hasError) {
               return Center(child: Text(snapshot.error.toString()));
             } else {

@@ -32,7 +32,7 @@ class Routes {
       case HubungiKamiScreen.routeName:
         return MaterialPageRoute(builder: (_) => HubungiKamiScreen());
       case TentangAppScreen.routeName:
-        return MaterialPageRoute(builder: (_) => const TentangAppScreen());
+        return MaterialPageRoute(builder: (_) => TentangAppScreen());
       case MateriSayaScreen.routeName:
         return MaterialPageRoute(builder: (_) => const MateriSayaScreen());
       case DetailMateriScreen.routeName:

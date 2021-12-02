@@ -1,4 +1,4 @@
-package com.example.trampillv2
+package com.trampill.trampill
 
 import io.flutter.embedding.android.FlutterActivity
 

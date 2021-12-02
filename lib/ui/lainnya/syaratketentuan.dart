@@ -131,7 +131,7 @@ Seorang pengguna Trampill akan mengganti kerugian, membela dan menjaga dari rasa
     return Scaffold(
       appBar: AppBar(title: const Text("Syarat & Ketentuan"),),
       body: Container(
-        color: Colors.indigo,
+        color: Colors.white,
         child: SafeArea(
           child: Markdown(
             controller: controller,

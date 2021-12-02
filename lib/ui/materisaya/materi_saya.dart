@@ -50,6 +50,9 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
         child: Row(
           children: [
             Expanded(child: Text(materi.judul, style: bigfont,)),
+            IconButton(
+              color: Colors.blue,
+              onPressed: () {}, icon: Icon(Icons.favorite)),
             ElevatedButton(onPressed: () {
               Get.toNamed('/materi', arguments: materi);
             }, child: const Text("Buka")),
@@ -90,8 +93,10 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
                   const Text("Error loading. login First"),
                   ElevatedButton(
                     onPressed: () async {
-                      await Get.toNamed('/login');
-                      setState(() {});
+                      var result = await Get.toNamed('/login');
+                      if (result == "success") {
+                      Get.snackbar("Status","Login berhasil");
+                      setState(() {});}
                     },
                     child: const Text("Login"),
                   )

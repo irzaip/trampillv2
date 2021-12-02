@@ -352,7 +352,7 @@ Cara Trampill menggunakan informasi dari situs atau aplikasi yang menggunakan la
     return Scaffold(
       appBar: AppBar(title: const Text("Privasi"),),
       body:  Container(
-        color: Colors.indigo,
+        color: Colors.white,
         child: SafeArea(
           child: Markdown(
             controller: controller,

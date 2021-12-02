@@ -30,7 +30,7 @@ bergabunglah di komunitas kami di:
         title: const Text('Tentang kami'),
       ),
       body: Container(
-        color: Colors.indigo,
+        color: Colors.white,
         child: SafeArea(
           child: ListView(
             children: <Widget>[Column(

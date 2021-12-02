@@ -8,15 +8,17 @@ class LainnyaWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       appBar: AppBar(
         title: const Text("TRMPLL"),
       ),
-      body: SafeArea(
+      body: SingleChildScrollView(
           child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   ElevatedButton(
                       onPressed: () async {
@@ -24,7 +26,9 @@ class LainnyaWidget extends StatelessWidget {
                       },
                       child: const Text("LOGIN")),
                   ElevatedButton(
-                      onPressed: () {}, child: const Text("Settings")),
+                      onPressed: () {
+                        Get.toNamed('/setting');
+                      }, child: const Text("Settings")),
                   ElevatedButton(
                       onPressed: () {}, child: const Text("Akun Saya")),
                   ElevatedButton(
