@@ -97,13 +97,38 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       Get.back(result: "success");
                     } else {
-                      Get.snackbar("Status", "Login Gagal - userid atau password salah!",
-                        snackPosition: SnackPosition.BOTTOM,
+                        Get.snackbar(
+                          "STATUS",
+                          "Login gagal - userid atau password salah",
+                          icon: Icon(Icons.person, color: Colors.white),
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.green,
+                          borderRadius: 20,
+                          margin: EdgeInsets.all(15),
+                          colorText: Colors.white,
+                          duration: Duration(seconds: 4),
+                          isDismissible: true,
+                          dismissDirection: SnackDismissDirection.HORIZONTAL,
+                          forwardAnimationCurve: Curves.easeOutBack,
                         );
+
                     }
                   } catch (e) {
-                    Get.snackbar("Status", "Error connecting server, please check internet.",
-                    snackPosition: SnackPosition.BOTTOM);
+                        Get.snackbar(
+                          "STATUS",
+                          "Error Connecting server, please check internet",
+                          icon: Icon(Icons.error, color: Colors.white),
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.green,
+                          borderRadius: 20,
+                          margin: EdgeInsets.all(15),
+                          colorText: Colors.white,
+                          duration: Duration(seconds: 4),
+                          isDismissible: true,
+                          dismissDirection: SnackDismissDirection.HORIZONTAL,
+                          forwardAnimationCurve: Curves.easeOutBack,
+                        );
+
                   }
                   setState(() {});
                 },

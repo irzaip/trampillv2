@@ -19,15 +19,21 @@ class HomeScreenWidget extends StatefulWidget {
 
 class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   late Future<List<Materi>> listMateri;
-  late List<Materi> displayedMateri;
+  late List<Materi> fullList;
+  String filterjudul = "";
+  String valueText = "";
+  List<String> kategories = []; 
+  String _selectedKategories = "";
   double listHeight = 200;
   double topContainer = 0;
+  TextEditingController _textFieldController = TextEditingController();
 
   @override
   void initState() {
     //super.initState();
     listMateri = apiListMateri(context);
   }
+
 
   /// Fungsi menghitung discount dan menampilkan dalam bentuk string
   String hitungharga(harga, discount) {
@@ -67,6 +73,88 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
       return hargafont;
     }
   }
+
+Future<void> _displayTextInputDialog(BuildContext context) async {
+   return showDialog(
+       context: context,
+       builder: (context) {
+         return AlertDialog(
+           title: const Text('Mencari'),
+           content: TextField(
+             onChanged: (value) {
+               setState(() {
+                 filterjudul = value.toLowerCase();
+               });
+             },
+             controller: _textFieldController,
+             decoration: const InputDecoration(hintText: "cari text..."),
+           ),
+           actions: <Widget>[
+             ElevatedButton(
+               child: Text('OK'),
+               onPressed: () {
+                 setState(() {
+                   Navigator.pop(context);
+                 });
+               },
+             ),
+              ElevatedButton(onPressed: () {
+                setState(() {
+                  _selectedKategories = "";
+                  filterjudul = "";
+                  Navigator.pop(context);
+                });
+              }, child: const Text("Reset"))
+           ],
+         );
+       });
+ }
+
+Future<void> _filterByCategory() async {
+    kategories = [];
+    fullList = await listMateri;
+    var data = []; 
+    fullList.forEach((element) {
+        data.addAll(element.tags.cast().toList());
+    });
+    data = data.toSet().toList();
+    data.forEach((value) {
+      kategories.add(value.toString());
+    });
+    if (_selectedKategories == "") { _selectedKategories = kategories[0].toString();}
+    filterjudul = "";
+   return showDialog(
+       context: context,
+       builder: (context) {         
+         return AlertDialog(
+           title: const Text('Filter berdasarkan kategori'),
+           content: DropdownButton<String>(
+             value: _selectedKategories,
+             items: kategories.map((value) {
+               return DropdownMenuItem(child: new Text(value), value: value);
+             }).toList(),
+             onChanged: (newvalue) {
+               setState(() {
+                _selectedKategories = newvalue.toString();  
+               });
+               Navigator.pop(context);
+             },
+           ),
+           actions: [
+             ElevatedButton(
+               onPressed: (){
+                 setState(() {
+                   _selectedKategories = "";
+                   filterjudul = "";
+                   Navigator.pop(context);
+                 });
+               }, child: const Text("Reset"))
+           ],
+         );
+       });
+ }
+
+
 
   /// menampilkan card listmateri
   Widget materiCard(context, Materi materi) {
@@ -146,7 +234,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                   ElevatedButton(
                                       onPressed: () async {
                                         await Get.toNamed("/detailmateri",
-                                            arguments: materi);        
+                                            arguments: materi);
                                       },
                                       child: const Text("Buka")),
                                   const SizedBox(width: 10),
@@ -182,10 +270,16 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           leading: const Icon(Icons.festival),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                _displayTextInputDialog(context);
+              },
               icon: const Icon(Icons.search),
             ),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.category)),
+            IconButton(
+                onPressed: () {
+                  _filterByCategory();
+                },
+                icon: const Icon(Icons.category)),
           ],
         ),
         body: Container(
@@ -194,10 +288,23 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               future: listMateri,
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.data != null) {
+                  var mydata = [];
+                  print(filterjudul);
+                  print(_selectedKategories);
+                  snapshot.data.forEach((e) => {
+
+                        if (_selectedKategories == "" && (filterjudul == "" || e.judul.toLowerCase().contains(filterjudul))) 
+                        {
+                          mydata.add(e)
+                        } else if (filterjudul == "" && e.tags.cast().toList().contains(_selectedKategories)) {
+                          mydata.add(e)
+                        }
+
+                      });
                   return Expanded(
                       child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
-                    itemCount: snapshot.data.length + 1,
+                    itemCount: mydata.length + 1,
                     itemBuilder: (context, int index) {
                       if (index == 0) {
                         return scrollableKegiatan();
@@ -206,25 +313,24 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                         return materiCard(
                             context,
                             Materi(
-                                id: snapshot.data[index].id,
-                                kode: snapshot.data[index].kode,
-                                judul: snapshot.data[index].judul,
-                                rating: snapshot.data[index].rating,
-                                pendek: snapshot.data[index].pendek,
-                                deskripsi: snapshot.data[index].deskripsi,
-                                gambar: snapshot.data[index].gambar,
-                                kategori: snapshot.data[index].gambar,
-                                copywrite: snapshot.data[index].copywrite,
-                                tags: snapshot.data[index].tags,
-                                harga: snapshot.data[index].harga,
-                                discount: snapshot.data[index].discount,
-                                pengajar: snapshot.data[index].pengajar,
-                                tentangPengajar:
-                                    snapshot.data[index].tentangPengajar,
-                                hidden: snapshot.data[index].hidden,
-                                featured: snapshot.data[index].featured,
-                                frontpage: snapshot.data[index].frontpage,
-                                playlist: snapshot.data[index].playlist));
+                                id: mydata[index].id,
+                                kode: mydata[index].kode,
+                                judul: mydata[index].judul,
+                                rating: mydata[index].rating,
+                                pendek: mydata[index].pendek,
+                                deskripsi: mydata[index].deskripsi,
+                                gambar: mydata[index].gambar,
+                                kategori: mydata[index].gambar,
+                                copywrite: mydata[index].copywrite,
+                                tags: mydata[index].tags,
+                                harga: mydata[index].harga,
+                                discount: mydata[index].discount,
+                                pengajar: mydata[index].pengajar,
+                                tentangPengajar: mydata[index].tentangPengajar,
+                                hidden: mydata[index].hidden,
+                                featured: mydata[index].featured,
+                                frontpage: mydata[index].frontpage,
+                                playlist: mydata[index].playlist));
                       }
                     },
                   ));
@@ -262,22 +368,6 @@ class ListKegiatan extends StatefulWidget {
 
 class _ListKegiatanState extends State<ListKegiatan> {
   late Future<List<Kegiatan>> kegiatans;
-  // var color_index = 0;
-  // var color_list = [
-  //   Colors.grey[100],
-  //   Colors.indigo[50],
-  //   Colors.lightBlue[50],
-  // ];
-
-  // Colors cycleColor() {
-  //   var cardcolor = color_list[color_index];
-  //   color_index = color_index++;
-  //   if (color_index > color_list.length) {
-  //     color_index = 0;
-  //   }
-  //   return cardcolor;
-  // }
-
   RandomColor _randomColor = RandomColor();
 
   @override

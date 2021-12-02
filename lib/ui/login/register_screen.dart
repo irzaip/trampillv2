@@ -130,6 +130,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           status = "Unknown Error";
                         }
 
+                        Get.back();
+                        
                         Get.snackbar(
                           "STATUS",
                           status,
@@ -148,10 +150,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         //Get.back();
 
                       } else {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                          content: Text("Register Error"),
-                        ));
+                        Get.snackbar(
+                          "STATUS",
+                          "Register Error",
+                          icon: Icon(Icons.error, color: Colors.white),
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.green,
+                          borderRadius: 20,
+                          margin: EdgeInsets.all(15),
+                          colorText: Colors.white,
+                          duration: Duration(seconds: 4),
+                          isDismissible: true,
+                          dismissDirection: SnackDismissDirection.HORIZONTAL,
+                          forwardAnimationCurve: Curves.easeOutBack,
+                        );
                       }
                     },
                     child: const Text('Daftar'))

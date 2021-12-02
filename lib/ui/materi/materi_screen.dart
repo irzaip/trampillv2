@@ -176,29 +176,37 @@ _launchURL(open_url) async {
                   });
             } else if (snapshot.hasError &&
                 snapshot.error.toString().contains('login')) {
-              return Column(
+              return Center(
+                  child: Column(
                 children: [
-                  Expanded(
-                    child: Center(
-                        child: Column(
-                      children: [
-                        Text(snapshot.error.toString()),
-                        ElevatedButton(
-                            onPressed: () async {
-                              var result = await Get.toNamed('/login');
-                              if (result  == "success") {
-                              Get.back();
-                              Get.snackbar("Status", "Login Berhasil",
-                                snackPosition: SnackPosition.BOTTOM);
-                  
-                              }
-                            },
-                            child: const Text("Login"))
-                      ],
-                    )),
-                  ),
+                  const SizedBox(height: 150),
+                  Text(snapshot.error.toString()),
+                  ElevatedButton(
+                      onPressed: () async {
+                        var result = await Get.toNamed('/login');
+                        if (result  == "success") {
+                        Get.back();
+                        Get.snackbar(
+                          "STATUS",
+                          "Login Berhasil",
+                          icon: Icon(Icons.check_circle, color: Colors.white),
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.green,
+                          borderRadius: 20,
+                          margin: EdgeInsets.all(15),
+                          colorText: Colors.white,
+                          duration: Duration(seconds: 4),
+                          isDismissible: true,
+                          dismissDirection: SnackDismissDirection.HORIZONTAL,
+                          forwardAnimationCurve: Curves.easeOutBack,
+                        );
+
+              
+                        }
+                      },
+                      child: const Text("Login"))
                 ],
-              );
+              ));
             } else if (snapshot.hasError) {
               return Center(child: Text(snapshot.error.toString()));
             } else {
