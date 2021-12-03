@@ -155,7 +155,6 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
                     var result = await Get.toNamed('/login');
                     print(result);
                     if (result == "success") {
-                      Get.snackbar("Status", "Login berhasil");
                       setState(() {});}
                   },
                   child: const Text("Login"),

@@ -22,7 +22,8 @@ dependencies:
   random_color: ^1.0.6-nullsafety
   package_info_plus: ^1.3.0
   unique_device_id: ^0.1.2
-
+  icon_badge: ^1.0.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

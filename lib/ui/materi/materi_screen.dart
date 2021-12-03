@@ -183,13 +183,13 @@ _launchURL(open_url) async {
                   Text(snapshot.error.toString()),
                   ElevatedButton(
                       onPressed: () async {
-                        var result = await Get.toNamed('/login');
+                        var result = await Get.offNamed('/login');
                         if (result  == "success") {
-                        Get.back();
-                        Get.snackbar(
+                          Get.close(1);
+                          Get.snackbar(
                           "STATUS",
                           "Login Berhasil",
-                          icon: Icon(Icons.check_circle, color: Colors.white),
+                          icon: Icon(Icons.person, color: Colors.white),
                           snackPosition: SnackPosition.BOTTOM,
                           backgroundColor: Colors.green,
                           borderRadius: 20,
@@ -200,7 +200,6 @@ _launchURL(open_url) async {
                           dismissDirection: SnackDismissDirection.HORIZONTAL,
                           forwardAnimationCurve: Curves.easeOutBack,
                         );
-
               
                         }
                       },

@@ -19,6 +19,7 @@ import 'package:trampillv2/ui/materisaya/materi_saya.dart';
 import 'package:trampillv2/ui/pembayaran/pembayaran_screen.dart';
 import 'package:trampillv2/ui/kegiatan/kegiatan.dart';
 import 'ui/kegiatan/listkegiatan.dart';
+import 'package:trampillv2/ui/message/message.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/listkegiatan", page: () => ListKegiatanScreen()),
         GetPage(name: "/register", page: () => const RegisterScreen()),
         GetPage(name: "/setting" , page: () => SettingScreen()),
+        GetPage(name: "/message" , page: () => const MessageScreen()),
       ],
       debugShowCheckedModeBanner: false,
       // onGenerateRoute: Routes.generateRoute,

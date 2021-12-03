@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/painting.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:trampillv2/api/api_message.dart';
 import 'package:trampillv2/api/class_kegiatan.dart';
 import 'package:trampillv2/api/api_listkegiatan.dart';
 import 'package:trampillv2/api/api_listmateri.dart';
@@ -9,6 +10,8 @@ import 'package:trampillv2/api/class_materi.dart';
 import 'package:get/get.dart';
 import 'package:trampillv2/values/fontstyle.dart';
 import 'package:random_color/random_color.dart';
+import 'package:trampillv2/api/class_message.dart';
+import 'package:icon_badge/icon_badge.dart';
 
 class HomeScreenWidget extends StatefulWidget {
   const HomeScreenWidget({Key? key}) : super(key: key);
@@ -27,12 +30,19 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   double listHeight = 200;
   double topContainer = 0;
   TextEditingController _textFieldController = TextEditingController();
+  // late Future<List<Message>> messages;
 
   @override
   void initState() {
     //super.initState();
     listMateri = apiListMateri(context);
+    try {
+      messageCount();
+    } finally {
+      print("Message");
+    }
   }
+
 
   /// Fungsi menghitung discount dan menampilkan dalam bentuk string
   String hitungharga(harga, discount) {
@@ -268,7 +278,15 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Trampill'),
-          leading: const Icon(Icons.festival),
+          leading: IconBadge(
+            itemCount: 30,
+            badgeColor: Colors.red,
+            itemColor: Colors.white,
+            hideZero: true,
+            onTap: () {
+              Get.toNamed('/message');
+            },
+            icon: Icon(Icons.message)),
           actions: [
             IconButton(
               onPressed: () {

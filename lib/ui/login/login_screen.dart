@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("TRMPL"),
+        title: const Text("Login / Logout / Register"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -96,6 +96,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       prefs.setString("password", fPassword);
 
                       Get.back(result: "success");
+                      Get.snackbar(
+                          "STATUS",
+                          "Login Berhasil",
+                          icon: Icon(Icons.person, color: Colors.white),
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.green,
+                          borderRadius: 20,
+                          margin: EdgeInsets.all(15),
+                          colorText: Colors.white,
+                          duration: Duration(seconds: 4),
+                          isDismissible: true,
+                          dismissDirection: SnackDismissDirection.HORIZONTAL,
+                          forwardAnimationCurve: Curves.easeOutBack,
+                        );
+
                     } else {
                         Get.snackbar(
                           "STATUS",

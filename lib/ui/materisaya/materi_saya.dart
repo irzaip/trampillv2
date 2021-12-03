@@ -96,21 +96,6 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
                       var result = await Get.toNamed('/login');
                       if (result == "success") {
                         setState(() {});
-
-                        Get.snackbar(
-                          "STATUS",
-                          "Login Berhasil",
-                          icon: Icon(Icons.person, color: Colors.white),
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.green,
-                          borderRadius: 20,
-                          margin: EdgeInsets.all(15),
-                          colorText: Colors.white,
-                          duration: Duration(seconds: 4),
-                          isDismissible: true,
-                          dismissDirection: SnackDismissDirection.HORIZONTAL,
-                          forwardAnimationCurve: Curves.easeOutBack,
-                        );
                       }
                     },
                     child: const Text("Login"),

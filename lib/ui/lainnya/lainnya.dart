@@ -10,7 +10,7 @@ class LainnyaWidget extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset : false,
       appBar: AppBar(
-        title: const Text("TRMPLL"),
+        title: const Text("Lainnya..."),
       ),
       body: SingleChildScrollView(
           child: Padding(
@@ -59,7 +59,7 @@ class LainnyaWidget extends StatelessWidget {
                         Get.toNamed("/tentangapp");
                       },
                       child: const Text("Tentang Aplikasi ini")),
-                ],
+                  ],
               ))),
     );
   }

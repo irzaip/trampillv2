@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'dart:io';
+import 'package:get/get.dart';
 
 class PembayaranScreen extends StatefulWidget {
   const PembayaranScreen({Key? key}) : super(key: key);
@@ -49,7 +50,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("TRMPL"),
+        title: const Text("Pembelian / Pembayaran"),
       ),
       body: FutureBuilder(
             future: pembayaran(),
@@ -69,7 +70,7 @@ class _PembayaranScreenState extends State<PembayaranScreen> {
                     const Text("Error loading. login First"),
                     ElevatedButton(
                       onPressed: () async {
-                        await Navigator.pushNamed(context, '/login');
+                        await Get.toNamed('/login');
                         setState(() {});
                       },
                       child: const Text("Login"),
