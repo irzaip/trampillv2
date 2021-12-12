@@ -5,6 +5,7 @@ import 'package:trampillv2/api/class_pendaftaran.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:trampillv2/values/fontstyle.dart';
 
 class MateriSayaScreen extends StatefulWidget {
   const MateriSayaScreen({Key? key}) : super(key: key);
@@ -46,8 +47,6 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
   }
 
   Widget materiCard(materi) {
-  TextStyle bigfont = const TextStyle(
-      fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -87,9 +86,28 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
               return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, int index) {
-                    return materiCard(
-                      snapshot.data[index].materi);
-                  });
+                    return Dismissible(
+                      key: new Key(snapshot.data[index].toString()),
+                      onDismissed: (direction) {
+                        snapshot.data.removeAt(index);
+                        Get.snackbar(
+                          "STATUS",
+                          "Materi telah dihapus",
+                          icon: Icon(Icons.info, color: Colors.white),
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.green,
+                          borderRadius: 20,
+                          margin: EdgeInsets.all(15),
+                          colorText: Colors.white,
+                          duration: Duration(seconds: 4),
+                          isDismissible: true,
+                          dismissDirection: SnackDismissDirection.HORIZONTAL,
+                          forwardAnimationCurve: Curves.easeOutBack,
+                        );
+                      },
+                      child: materiCard(
+                        snapshot.data[index].materi),
+                    );   });  
             } else if (snapshot.hasError) {
               return Center(
                 child: Column(children: [
