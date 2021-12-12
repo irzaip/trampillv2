@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:flutter/painting.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:trampillv2/api/api_message.dart';
 import 'package:trampillv2/api/class_kegiatan.dart';
@@ -10,8 +9,8 @@ import 'package:trampillv2/api/class_materi.dart';
 import 'package:get/get.dart';
 import 'package:trampillv2/values/fontstyle.dart';
 import 'package:random_color/random_color.dart';
-import 'package:trampillv2/api/class_message.dart';
 import 'package:icon_badge/icon_badge.dart';
+import 'package:trampillv2/values/harga.dart';
 
 class HomeScreenWidget extends StatefulWidget {
   const HomeScreenWidget({Key? key}) : super(key: key);
@@ -29,59 +28,18 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   String _selectedKategories = "";
   double listHeight = 200;
   double topContainer = 0;
-  TextEditingController _textFieldController = TextEditingController();
+  late Future<int> msgcount;
+  final TextEditingController _textFieldController = TextEditingController();
   // late Future<List<Message>> messages;
 
   @override
   void initState() {
     //super.initState();
     listMateri = apiListMateri(context);
-    try {
-      messageCount();
-    } finally {
-      print("Message");
-    }
+    msgcount = messageCount();
   }
 
 
-  /// Fungsi menghitung discount dan menampilkan dalam bentuk string
-  String hitungharga(harga, discount) {
-    var total = harga - (harga * discount / 100);
-    if (harga != 0 && discount != 100) {
-      total = total.floor();
-      return NumberFormat.currency(
-              locale: 'id', decimalDigits: 0, symbol: 'Rp ')
-          .format(harga)
-          .toString();
-    } else {
-      return "Gratis";
-    }
-  }
-
-  /// Fungsi menghitung discount dan menampilkan dalam bentuk string
-  String discount(harga, discount) {
-    var total = harga - (harga * discount / 100);
-    total = total.floor();
-    if (total != 0) {
-      total = total.floor();
-      return NumberFormat.currency(
-              locale: 'id', decimalDigits: 0, symbol: 'Rp ')
-          .format(total)
-          .toString();
-      // return discount.toString();
-    } else {
-      return "";
-    }
-  }
-
-  /// menampilkan harga dalam bentuk coret, apabila berlaku discount.
-  TextStyle fontharga(harga, discount) {
-    if (harga != 0 && discount != 0 && discount != 100) {
-      return hargacoret;
-    } else {
-      return hargafont;
-    }
-  }
 
   /// Memfilter Judul Materi berdasarkan String yang di ketik dari
   /// TextField yang berada pada Alert
@@ -103,7 +61,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             ),
             actions: <Widget>[
               ElevatedButton(
-                child: Text('OK'),
+                child: const Text('OK'),
                 onPressed: () {
                   setState(() {
                     Navigator.pop(context);
@@ -152,7 +110,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             content: DropdownButton<String>(
               value: _selectedKategories,
               items: kategories.map((value) {
-                return DropdownMenuItem(child: new Text(value), value: value);
+                return DropdownMenuItem(child: Text(value), value: value);
               }).toList(),
               onChanged: (newvalue) {
                 setState(() {
@@ -240,7 +198,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                         materi.harga, materi.discount),
                                   ),
                                   Text(
-                                    discount(materi.harga, materi.discount),
+                                    hitungdiscount(materi.harga, materi.discount),
                                     style: hargafont,
                                   ),
                                   const SizedBox(width: 100),
@@ -278,15 +236,24 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Trampill'),
-          leading: IconBadge(
-            itemCount: 30,
-            badgeColor: Colors.red,
-            itemColor: Colors.white,
-            hideZero: true,
-            onTap: () {
-              Get.toNamed('/message');
-            },
-            icon: Icon(Icons.message)),
+          leading: FutureBuilder(
+            future: msgcount,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.data != null) {
+              return IconBadge(
+                itemCount: snapshot.data,
+                badgeColor: Colors.red,
+                itemColor: Colors.white,
+                hideZero: true,
+                onTap: () {
+                  Get.toNamed('/message');
+                },
+                icon: const Icon(Icons.message));
+            } else {
+              return const Icon(Icons.message);
+            }
+            }
+          ),
           actions: [
             IconButton(
               onPressed: () {
@@ -311,8 +278,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   Proses Filtering dan Pengolahan ada di bagian ini. 
                   */
                   var mydata = [];
-                  print(filterjudul);
-                  print(_selectedKategories);
                   snapshot.data.forEach((e) => {
                         if (_selectedKategories == "" &&
                             (filterjudul == "" ||
@@ -354,7 +319,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                 hidden: mydata[index].hidden,
                                 featured: mydata[index].featured,
                                 frontpage: mydata[index].frontpage,
-                                playlist: mydata[index].playlist));
+                                playlist: mydata[index].playlist,
+                                password: mydata[index].password));
                       }
                     },
                   ));
@@ -362,7 +328,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 if (snapshot.hasError) {
                   return Expanded(
                       child: const Center(
-                    child: const Text(
+                    child: Text(
                         "Error loading, please check server setting or internet connection"),
                   ));
                 }
@@ -396,7 +362,7 @@ class ListKegiatan extends StatefulWidget {
 
 class _ListKegiatanState extends State<ListKegiatan> {
   late Future<List<Kegiatan>> kegiatans;
-  RandomColor _randomColor = RandomColor();
+  final RandomColor _randomColor = RandomColor();
 
   @override
   void initState() {

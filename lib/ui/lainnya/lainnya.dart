@@ -30,7 +30,9 @@ class LainnyaWidget extends StatelessWidget {
                         Get.toNamed('/setting');
                       }, child: const Text("Settings")),
                   ElevatedButton(
-                      onPressed: () {}, child: const Text("Akun Saya")),
+                      onPressed: () {
+                        Get.toNamed('/profile');
+                      }, child: const Text("Akun Saya")),
                   ElevatedButton(
                       onPressed: () {
                         Get.toNamed('/tentang');

@@ -6,6 +6,7 @@ import 'package:trampillv2/ui/home/home_screen.dart';
 import 'package:trampillv2/ui/lainnya/hubungikami.dart';
 import 'package:trampillv2/ui/lainnya/lainnya.dart';
 import 'package:trampillv2/ui/lainnya/privasi.dart';
+import 'package:trampillv2/ui/lainnya/profil.dart';
 import 'package:trampillv2/ui/lainnya/setting.dart';
 import 'package:trampillv2/ui/lainnya/syaratketentuan.dart';
 import 'package:trampillv2/ui/lainnya/tentang.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/register", page: () => const RegisterScreen()),
         GetPage(name: "/setting" , page: () => SettingScreen()),
         GetPage(name: "/message" , page: () => const MessageScreen()),
+        GetPage(name: "/profile", page: () => ProfileScreen()),
       ],
       debugShowCheckedModeBanner: false,
       // onGenerateRoute: Routes.generateRoute,

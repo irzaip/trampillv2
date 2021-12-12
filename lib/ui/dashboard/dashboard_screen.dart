@@ -63,8 +63,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<BottomNavigationBarItem> _mainMenuItems() {
     return <BottomNavigationBarItem>[
       _mainMenuItemWidget('Beranda', Icons.home),
-      _mainMenuItemWidget('Materi Saya', Icons.school),
-      _mainMenuItemWidget('Favorit', Icons.favorite),
+      _mainMenuItemWidget('Materi', Icons.school),
+      _mainMenuItemWidget('IQRO', Icons.receipt_sharp),
       _mainMenuItemWidget('Pembelian', Icons.payment),
       _mainMenuItemWidget('Lainnya...', Icons.more_horiz),
     ];

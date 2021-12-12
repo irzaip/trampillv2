@@ -19,6 +19,7 @@ class Materi {
   final bool featured;
   final bool frontpage;
   final bool playlist;
+  final bool password;
 
   Materi({
     required this.id,
@@ -39,6 +40,7 @@ class Materi {
     required this.featured,
     required this.frontpage,
     required this.playlist,
+    required this.password,
   });
 
   factory Materi.fromJson(Map<String, dynamic> json) {
@@ -61,6 +63,7 @@ class Materi {
         featured: json['featured'] ?? false, 
         frontpage: json['frontpage'] ?? false, 
         playlist: json['playlist'] ?? false,
+        password: json['password'] ?? false,
         );
     }
 }

@@ -34,7 +34,11 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
         headers: {HttpHeaders.authorizationHeader: fulltoken});
 
     if (request.statusCode == 200) {
-      var result = compute(parseListPendaftaran, request.body);
+      var result = await compute(parseListPendaftaran, request.body);
+      var listterdaftar = [];
+      result.forEach((element) { listterdaftar.add(element.materi.id);});
+      listterdaftar.sort();
+      prefs.setString('listterdaftar', listterdaftar.toString());
       return result;
     } else {
       throw ("Error loading pendaftaran, login?");

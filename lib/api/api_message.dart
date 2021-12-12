@@ -26,7 +26,7 @@
     }
   }
 
-  Future<void> messageCount() async {
+  Future<int> messageCount() async {
     var prefs = await SharedPreferences.getInstance();
     String api = '/api/message/';
     String access = prefs.getString("access").toString();
@@ -40,6 +40,9 @@
 
     if (request.statusCode == 200) {
       var result = await compute(parseMessage, request.body);
-      print(result.length);
-    } 
+      // print(result.length);
+      return result.length.toInt();
+    } else {
+      return 0;
+    }
   }

@@ -6,6 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:trampillv2/api/class_materi.dart';
 import 'package:trampillv2/values/fontstyle.dart';
+import 'package:trampillv2/values/harga.dart';
+import 'dart:convert';
+import 'dart:io';
 
 class DetailMateriScreen extends StatefulWidget {
   const DetailMateriScreen({Key? key}) : super(key: key);
@@ -18,12 +21,57 @@ class DetailMateriScreen extends StatefulWidget {
 class _DetailMateriScreenState extends State<DetailMateriScreen> {
   late Materi materi;
   late Future<Object> resultMateri;
+  late List<int> listterdaftar;
+  var texttombol = 'Daftar Materi'.obs;
+  TextEditingController _password = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     materi = Get.arguments;
     resultMateri = listtopic(materi.id);
+    getListTerdaftar();
+  }
+
+  Future<void> getListTerdaftar() async {
+    var prefs = await SharedPreferences.getInstance();
+    var listtf = prefs.getString('listterdaftar');
+    if (listtf != null) {
+      listtf = listtf.replaceFirst('[', '').replaceFirst(']', '');
+      listterdaftar = listtf.split(',').map((e) => int.parse(e)).toList();
+      if (listterdaftar.contains(materi.id)) {
+        texttombol = "Buka Materi".obs;
+      }
+    }
+  }
+
+  Future<String> mendaftarkan(materi) async {
+    var prefs = await SharedPreferences.getInstance();
+    String mainhome = prefs.getString("mainhome").toString();
+    String access = prefs.getString("access").toString();
+    String fulltoken = 'Bearer ' + access;
+    var uri =
+        Uri.parse(mainhome + '/api/mendaftar/' + materi.id.toString() + "/");
+    var data = {
+      'password': _password.text, 
+    };
+    //var bod = jsonEncode(data);
+
+    var response = await http.post(
+      uri,
+      headers: {
+//        "Content-Type": "application/json",
+         HttpHeaders.authorizationHeader: fulltoken
+      },
+      body: data,
+    );
+
+    if (response.statusCode == 200) {
+      var result = jsonDecode(response.body)['status'].toString();
+      print(result);
+      return result;
+    }
+    return "Terjadi kesalahan sewaktu mendaftar.";
   }
 
   Future<Object> listtopic(reqId) async {
@@ -46,7 +94,87 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
     }
   }
 
+  daftar(String instruksi) {
+    if (instruksi.toString() == 'Daftar Materi') {
+      AlertDialog alert = AlertDialog(
+        title: const Text("Mendaftar"),
+        content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text("Perlu pembayaran untuk mengakses materi ini."),
+              const Text("Lakukan pembayaran ke:"),
+              const Text("rekening a/n: xx"),
+              const Text("cabang: xxx"),
+              const Text("no.rekening: 292989289"),
+              materi.password
+                  ? TextField(
+                      controller: _password,
+                    )
+                  : Text("no"),
+            ]),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Batal")),
+          ElevatedButton(
+              onPressed: () async {
+                var result = await mendaftarkan(materi);
+                if (result == "Sukses, Materi telah di daftarkan") {
+                  Navigator.of(context).pop();
+                  // await Future.delayed(Duration(seconds: 1));
+
+                  Get.snackbar(
+                    "Status",
+                    result,
+                    icon: Icon(Icons.person, color: Colors.white),
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: Colors.green,
+                    borderRadius: 20,
+                    margin: EdgeInsets.all(15),
+                    colorText: Colors.white,
+                    duration: Duration(seconds: 4),
+                    isDismissible: true,
+                    dismissDirection: SnackDismissDirection.HORIZONTAL,
+                    forwardAnimationCurve: Curves.easeOutBack,
+                  );
+                  Get.offNamed('/materi', arguments: materi);
+                } else {
+                  Navigator.of(context).pop();
+                  Get.snackbar(
+                    "Status",
+                    result,
+                    icon: Icon(Icons.person, color: Colors.white),
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: Colors.green,
+                    borderRadius: 20,
+                    margin: EdgeInsets.all(15),
+                    colorText: Colors.white,
+                    duration: Duration(seconds: 4),
+                    isDismissible: true,
+                    dismissDirection: SnackDismissDirection.HORIZONTAL,
+                    forwardAnimationCurve: Curves.easeOutBack,
+                  );
+                }
+              },
+              child: const Text("OK")),
+        ],
+      );
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          });
+    } else {
+      Get.offNamed('/materi', arguments: materi);
+    }
+  }
+
   Widget infoMateri(materi) {
+    var harga = materi.harga;
+    var discount = materi.discount;
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -92,7 +220,31 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
             materi.tags.toString(),
             style: mediumfont,
           ),
-          const SizedBox(height: 8,),
+          const SizedBox(
+            height: 8,
+          ),
+          Text(
+            "Akses Menggunakan Password:",
+            style: titlefont,
+          ),
+          Text(materi.password ? "YA" : "TIDAK"),
+          SizedBox(
+            height: 8,
+          ),
+          Text("Harga", style: titlefont),
+          Row(
+            children: [
+              Text(
+                hitungharga(harga, discount),
+                style: fontharga(harga, discount),
+              ),
+              Text(
+                hitungdiscount(harga, discount),
+                style: hargafont,
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
           const Divider(),
           const SizedBox(
             height: 8,
@@ -100,9 +252,13 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(onPressed: () {
-                Get.offNamed('/materi', arguments: materi);
-              }, child: const Text("Buka Materi")),
+              ElevatedButton(
+                  onPressed: () {
+                    daftar("${texttombol}");
+
+                    //Get.offNamed('/materi', arguments: materi);
+                  },
+                  child: Obx(() => Text("${texttombol}"))),
               IconButton(
                   color: Colors.blueAccent,
                   onPressed: () {},
@@ -114,10 +270,15 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Konten Materi", style: titlefont,),
+              const Text(
+                "Konten Materi",
+                style: titlefont,
+              ),
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
         ]));
   }
 
@@ -129,7 +290,7 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
       ),
       body: FutureBuilder(
         future: resultMateri,
-        builder: (BuildContext context, AsyncSnapshot snapshot)  {
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.data != null) {
             return ListView.builder(
                 itemCount: snapshot.data.length + 1,
@@ -137,11 +298,17 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
                   if (index == 0) {
                     return infoMateri(materi);
                   } else {
-                    return Column(
-                      children: [
-                        Text(snapshot.data[index - 1].judul.toString()),
-                        const Divider(),
-                      ],
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 12, right: 12),
+                      child: Column(
+                        children: [
+                          Text(
+                            snapshot.data[index - 1].judul.toString(),
+                            style: mediumfont,
+                          ),
+                          const Divider(),
+                        ],
+                      ),
                     );
                   }
                 });
@@ -155,7 +322,8 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
                     var result = await Get.toNamed('/login');
                     print(result);
                     if (result == "success") {
-                      setState(() {});}
+                      setState(() {});
+                    }
                   },
                   child: const Text("Login"),
                 )

@@ -22,15 +22,15 @@ class MateriScreen extends StatefulWidget {
 
 class _MateriScreenState extends State<MateriScreen> {
   late Future<Object> resultmateri;
-  late Materi materi;
+  final Materi materi = Get.arguments;
   late Topic topic;
   final PageController _pageController = PageController();
 
   @override
   void initState() {
-    materi = Get.arguments;
-    resultmateri = apiMainMateri(materi.id);
     super.initState();
+    //materi = Get.arguments;
+    resultmateri = apiMainMateri(materi.id);
   }
 
   Future<List<Topic>> apiMainMateri(id) async {
@@ -47,7 +47,7 @@ class _MateriScreenState extends State<MateriScreen> {
       if (request.body == '{"status":"Belum terdaftar"}') {
         throw ("Anda harus mendaftar materi ini terlebih dahulu");
       }
-      var result = compute(parseTopic, request.body);
+      var result = await compute(parseTopic, request.body);
       return result;
     } else if (request.statusCode == 401) {
       throw ("Error loading materi, not login?");
