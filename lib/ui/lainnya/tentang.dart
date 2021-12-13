@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:trampillv2/values/assets.dart';
 
 class TentangScreen extends StatelessWidget {
+  TentangScreen({Key? key}) : super(key: key);
   static const String routeName = '/tentang';
   final String _markdownData = """
 
@@ -17,7 +18,8 @@ bergabunglah di komunitas kami di:
 
 """;
 
-  String url = 'https://docs.google.com/forms/d/e/1FAIpQLSeqj1oG-nU2Vp1gsOjf9BTFZ1LXU_K2Uz0IoRTv4ckeGonIbw/viewform';
+  String url =
+      'https://docs.google.com/forms/d/e/1FAIpQLSeqj1oG-nU2Vp1gsOjf9BTFZ1LXU_K2Uz0IoRTv4ckeGonIbw/viewform';
 
   @override
   Widget build(BuildContext context) {
@@ -33,27 +35,31 @@ bergabunglah di komunitas kami di:
         color: Colors.white,
         child: SafeArea(
           child: ListView(
-            children: <Widget>[Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Image.asset(imageIndosoai, fit: BoxFit.fitWidth,
-                ),
-                ElevatedButton(
-                    onPressed: () {_launchURL();},
-                    child: const Text("KLIK DISINI UNTUK BERGABUNG")),
-                SizedBox(
-                  height: 300,
-                   child: Markdown(
-                    controller: controller,
-                    selectable: true,
-                    data: _markdownData,
-                    imageDirectory: 'https://raw.githubusercontent.com',
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Image.asset(
+                    imageIndosoai,
+                    fit: BoxFit.fitWidth,
                   ),
-                ),
-
-              ],
-            ),
-    ],
+                  ElevatedButton(
+                      onPressed: () {
+                        _launchURL();
+                      },
+                      child: const Text("KLIK DISINI UNTUK BERGABUNG")),
+                  SizedBox(
+                    height: 300,
+                    child: Markdown(
+                      controller: controller,
+                      selectable: true,
+                      data: _markdownData,
+                      imageDirectory: 'https://raw.githubusercontent.com',
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -62,7 +68,8 @@ bergabunglah di komunitas kami di:
 }
 
 _launchURL() async {
-  const url = 'https://docs.google.com/forms/d/e/1FAIpQLSeqj1oG-nU2Vp1gsOjf9BTFZ1LXU_K2Uz0IoRTv4ckeGonIbw/viewform';
+  const url =
+      'https://docs.google.com/forms/d/e/1FAIpQLSeqj1oG-nU2Vp1gsOjf9BTFZ1LXU_K2Uz0IoRTv4ckeGonIbw/viewform';
   if (await canLaunch(url)) {
     await launch(url);
   } else {

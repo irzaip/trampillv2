@@ -24,15 +24,15 @@ class Routes {
       case MateriScreen.routeName:
         return MaterialPageRoute(builder: (_) => const MateriScreen());
       case PrivasiScreen.routeName:
-        return MaterialPageRoute(builder: (_) => PrivasiScreen());
+        return MaterialPageRoute(builder: (_) => const PrivasiScreen());
       case TentangScreen.routeName:
         return MaterialPageRoute(builder: (_) => TentangScreen());
       case SyaratKetentuanScreen.routeName:
-        return MaterialPageRoute(builder: (_) => SyaratKetentuanScreen());
+        return MaterialPageRoute(builder: (_) => const SyaratKetentuanScreen());
       case HubungiKamiScreen.routeName:
-        return MaterialPageRoute(builder: (_) => HubungiKamiScreen());
+        return MaterialPageRoute(builder: (_) => const HubungiKamiScreen());
       case TentangAppScreen.routeName:
-        return MaterialPageRoute(builder: (_) => TentangAppScreen());
+        return MaterialPageRoute(builder: (_) => const TentangAppScreen());
       case MateriSayaScreen.routeName:
         return MaterialPageRoute(builder: (_) => const MateriSayaScreen());
       case DetailMateriScreen.routeName:

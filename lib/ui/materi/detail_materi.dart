@@ -23,7 +23,7 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
   late Future<Object> resultMateri;
   late List<int> listterdaftar;
   var texttombol = 'Daftar Materi'.obs;
-  TextEditingController _password = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
     var uri =
         Uri.parse(mainhome + '/api/mendaftar/' + materi.id.toString() + "/");
     var data = {
-      'password': _password.text, 
+      'password': _password.text,
     };
     //var bod = jsonEncode(data);
 
@@ -61,14 +61,13 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
       uri,
       headers: {
 //        "Content-Type": "application/json",
-         HttpHeaders.authorizationHeader: fulltoken
+        HttpHeaders.authorizationHeader: fulltoken
       },
       body: data,
     );
 
     if (response.statusCode == 200) {
       var result = jsonDecode(response.body)['status'].toString();
-      print(result);
       return result;
     }
     return "Terjadi kesalahan sewaktu mendaftar.";
@@ -111,7 +110,7 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
                   ? TextField(
                       controller: _password,
                     )
-                  : Text("no"),
+                  : const Text("no"),
             ]),
         actions: [
           ElevatedButton(
@@ -129,13 +128,13 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
                   Get.snackbar(
                     "Status",
                     result,
-                    icon: Icon(Icons.person, color: Colors.white),
+                    icon: const Icon(Icons.person, color: Colors.white),
                     snackPosition: SnackPosition.BOTTOM,
                     backgroundColor: Colors.green,
                     borderRadius: 20,
-                    margin: EdgeInsets.all(15),
+                    margin: const EdgeInsets.all(15),
                     colorText: Colors.white,
-                    duration: Duration(seconds: 4),
+                    duration: const Duration(seconds: 4),
                     isDismissible: true,
                     dismissDirection: SnackDismissDirection.HORIZONTAL,
                     forwardAnimationCurve: Curves.easeOutBack,
@@ -146,13 +145,13 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
                   Get.snackbar(
                     "Status",
                     result,
-                    icon: Icon(Icons.person, color: Colors.white),
+                    icon: const Icon(Icons.person, color: Colors.white),
                     snackPosition: SnackPosition.BOTTOM,
                     backgroundColor: Colors.green,
                     borderRadius: 20,
-                    margin: EdgeInsets.all(15),
+                    margin: const EdgeInsets.all(15),
                     colorText: Colors.white,
-                    duration: Duration(seconds: 4),
+                    duration: const Duration(seconds: 4),
                     isDismissible: true,
                     dismissDirection: SnackDismissDirection.HORIZONTAL,
                     forwardAnimationCurve: Curves.easeOutBack,
@@ -223,15 +222,15 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
           const SizedBox(
             height: 8,
           ),
-          Text(
+          const Text(
             "Akses Menggunakan Password:",
             style: titlefont,
           ),
           Text(materi.password ? "YA" : "TIDAK"),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
-          Text("Harga", style: titlefont),
+          const Text("Harga", style: titlefont),
           Row(
             children: [
               Text(
@@ -254,10 +253,12 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
             children: [
               ElevatedButton(
                   onPressed: () {
+                    // ignore: unnecessary_brace_in_string_interps
                     daftar("${texttombol}");
 
                     //Get.offNamed('/materi', arguments: materi);
                   },
+                  // ignore: unnecessary_brace_in_string_interps
                   child: Obx(() => Text("${texttombol}"))),
               IconButton(
                   color: Colors.blueAccent,
@@ -269,8 +270,8 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
+            children: const [
+              Text(
                 "Konten Materi",
                 style: titlefont,
               ),
@@ -320,7 +321,6 @@ class _DetailMateriScreenState extends State<DetailMateriScreen> {
                 ElevatedButton(
                   onPressed: () async {
                     var result = await Get.toNamed('/login');
-                    print(result);
                     if (result == "success") {
                       setState(() {});
                     }

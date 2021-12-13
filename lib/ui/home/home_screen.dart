@@ -39,8 +39,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     msgcount = messageCount();
   }
 
-
-
   /// Memfilter Judul Materi berdasarkan String yang di ketik dari
   /// TextField yang berada pada Alert
   /// Proses pencarian berdasarkan variabel filterjudul
@@ -91,13 +89,13 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     kategories = [];
     fullList = await listMateri;
     var data = [];
-    fullList.forEach((element) {
+    for (var element in fullList) {
       data.addAll(element.tags.cast().toList());
-    });
+    }
     data = data.toSet().toList();
-    data.forEach((value) {
+    for (var value in data) {
       kategories.add(value.toString());
-    });
+    }
     if (_selectedKategories == "") {
       _selectedKategories = kategories[0].toString();
     }
@@ -198,7 +196,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                         materi.harga, materi.discount),
                                   ),
                                   Text(
-                                    hitungdiscount(materi.harga, materi.discount),
+                                    hitungdiscount(
+                                        materi.harga, materi.discount),
                                     style: hargafont,
                                   ),
                                   const SizedBox(width: 100),
@@ -234,110 +233,105 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Trampill'),
-          leading: FutureBuilder(
+      appBar: AppBar(
+        title: const Text('Trampill'),
+        leading: FutureBuilder(
             future: msgcount,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.data != null) {
-              return IconBadge(
-                itemCount: snapshot.data,
-                badgeColor: Colors.red,
-                itemColor: Colors.white,
-                hideZero: true,
-                onTap: () {
-                  Get.toNamed('/message');
-                },
-                icon: const Icon(Icons.message));
-            } else {
-              return const Icon(Icons.message);
-            }
-            }
+                return IconBadge(
+                    itemCount: snapshot.data,
+                    badgeColor: Colors.red,
+                    itemColor: Colors.white,
+                    hideZero: true,
+                    onTap: () {
+                      Get.toNamed('/message');
+                    },
+                    icon: const Icon(Icons.message));
+              } else {
+                return const Icon(Icons.message);
+              }
+            }),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _displayTextInputDialog(context);
+            },
+            icon: const Icon(Icons.search),
           ),
-          actions: [
-            IconButton(
+          IconButton(
               onPressed: () {
-                _displayTextInputDialog(context);
+                _filterByCategory();
               },
-              icon: const Icon(Icons.search),
-            ),
-            IconButton(
-                onPressed: () {
-                  _filterByCategory();
-                },
-                icon: const Icon(Icons.category)),
-          ],
-        ),
-        body: Container(
-          child: Column(children: [
-            FutureBuilder(
-              future: listMateri,
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.data != null) {
-                  /* 
+              icon: const Icon(Icons.category)),
+        ],
+      ),
+      body: Column(children: [
+        FutureBuilder(
+          future: listMateri,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.data != null) {
+              /* 
                   Proses Filtering dan Pengolahan ada di bagian ini. 
                   */
-                  var mydata = [];
-                  snapshot.data.forEach((e) => {
-                        if (_selectedKategories == "" &&
-                            (filterjudul == "" ||
-                                e.judul.toLowerCase().contains(filterjudul)))
-                          {mydata.add(e)}
-                        else if (filterjudul == "" &&
-                            e.tags
-                                .cast()
-                                .toList()
-                                .contains(_selectedKategories))
-                          {mydata.add(e)}
-                      });
-                  return Expanded(
-                      child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: mydata.length + 1,
-                    itemBuilder: (context, int index) {
-                      if (index == 0) {
-                        return scrollableKegiatan();
-                      } else {
-                        index = index - 1;
-                        return materiCard(
-                            context,
-                            Materi(
-                                id: mydata[index].id,
-                                kode: mydata[index].kode,
-                                judul: mydata[index].judul,
-                                rating: mydata[index].rating,
-                                pendek: mydata[index].pendek,
-                                deskripsi: mydata[index].deskripsi,
-                                gambar: mydata[index].gambar,
-                                kategori: mydata[index].gambar,
-                                copywrite: mydata[index].copywrite,
-                                tags: mydata[index].tags,
-                                harga: mydata[index].harga,
-                                discount: mydata[index].discount,
-                                pengajar: mydata[index].pengajar,
-                                tentangPengajar: mydata[index].tentangPengajar,
-                                hidden: mydata[index].hidden,
-                                featured: mydata[index].featured,
-                                frontpage: mydata[index].frontpage,
-                                playlist: mydata[index].playlist,
-                                password: mydata[index].password));
-                      }
-                    },
-                  ));
-                }
-                if (snapshot.hasError) {
-                  return Expanded(
-                      child: const Center(
-                    child: Text(
-                        "Error loading, please check server setting or internet connection"),
-                  ));
-                }
-                return const Expanded(
-                    child: Center(child: CircularProgressIndicator()));
-              },
-            ),
-          ]),
-        ));
+              var mydata = [];
+              snapshot.data.forEach((e) => {
+                    if (_selectedKategories == "" &&
+                        (filterjudul == "" ||
+                            e.judul.toLowerCase().contains(filterjudul)))
+                      {mydata.add(e)}
+                    else if (filterjudul == "" &&
+                        e.tags.cast().toList().contains(_selectedKategories))
+                      {mydata.add(e)}
+                  });
+              return Expanded(
+                  child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: mydata.length + 1,
+                itemBuilder: (context, int index) {
+                  if (index == 0) {
+                    return scrollableKegiatan();
+                  } else {
+                    index = index - 1;
+                    return materiCard(
+                        context,
+                        Materi(
+                            id: mydata[index].id,
+                            kode: mydata[index].kode,
+                            judul: mydata[index].judul,
+                            rating: mydata[index].rating,
+                            pendek: mydata[index].pendek,
+                            deskripsi: mydata[index].deskripsi,
+                            gambar: mydata[index].gambar,
+                            kategori: mydata[index].gambar,
+                            copywrite: mydata[index].copywrite,
+                            tags: mydata[index].tags,
+                            harga: mydata[index].harga,
+                            discount: mydata[index].discount,
+                            pengajar: mydata[index].pengajar,
+                            tentangPengajar: mydata[index].tentangPengajar,
+                            hidden: mydata[index].hidden,
+                            featured: mydata[index].featured,
+                            frontpage: mydata[index].frontpage,
+                            playlist: mydata[index].playlist,
+                            password: mydata[index].password));
+                  }
+                },
+              ));
+            }
+            if (snapshot.hasError) {
+              return const Expanded(
+                  child: Center(
+                child: Text(
+                    "Error loading, please check server setting or internet connection"),
+              ));
+            }
+            return const Expanded(
+                child: Center(child: CircularProgressIndicator()));
+          },
+        ),
+      ]),
+    );
   }
 
   /// Ini berisikan Bagian Kegiatan yang bisa di scroll
@@ -347,14 +341,14 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         height: listHeight,
         alignment: Alignment.topCenter,
         duration: const Duration(milliseconds: 200),
-        child: ListKegiatan());
+        child: const ListKegiatan());
   }
 }
 
 /// Class yang bertanggung jawab untuk Rendering Kegiatan pada awal Listview
 /// semua berdasarkan ketinggian 200
 class ListKegiatan extends StatefulWidget {
-  ListKegiatan({Key? key}) : super(key: key);
+  const ListKegiatan({Key? key}) : super(key: key);
 
   @override
   State<ListKegiatan> createState() => _ListKegiatanState();
@@ -369,7 +363,7 @@ class _ListKegiatanState extends State<ListKegiatan> {
     kegiatans = getListKegiatan();
   }
 
-  Widget CardKegiatan(kegiatan) {
+  Widget cardKegiatan(kegiatan) {
     Color _color =
         _randomColor.randomColor(colorBrightness: ColorBrightness.veryLight);
     return GestureDetector(
@@ -408,12 +402,10 @@ class _ListKegiatanState extends State<ListKegiatan> {
     );
   }
 
-  /// Ini adalah bagian build dark list kegiatan.
+  /// Ini adalah bagian build dari list kegiatan.
   /// FutureBuilder ditambah dengan ListView
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double scrollheight = size.height * 0.25;
     return FutureBuilder(
         future: kegiatans,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -425,7 +417,7 @@ class _ListKegiatanState extends State<ListKegiatan> {
                     ),
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, int index) {
-                  return CardKegiatan(snapshot.data[index]);
+                  return cardKegiatan(snapshot.data[index]);
                 });
           } else if (snapshot.hasError) {
             return Center(

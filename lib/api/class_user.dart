@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-
-
 class User {
   final int id;
   final String password;
@@ -33,7 +31,6 @@ class User {
     this.dateCreated,
   });
 
-
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
@@ -59,4 +56,3 @@ User parseUser(String responseBody) {
   // return parsed.map<User>((json) => User.fromJson(json));
   return parsed;
 }
-

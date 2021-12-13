@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-
 class HubungiKamiScreen extends StatelessWidget {
+  const HubungiKamiScreen({Key? key}) : super(key: key);
   static const String routeName = '/hubungikami';
 
   final String myText = """
@@ -27,9 +27,7 @@ class HubungiKamiScreen extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(20, 30, 30, 30),
         alignment: Alignment.topLeft,
         child: Markdown(data: myText),
-        ),
-      );
-
-
+      ),
+    );
   }
 }

@@ -1,8 +1,7 @@
-
 import 'package:flutter/cupertino.dart';
 
 class IqroScreen extends StatefulWidget {
-  IqroScreen({Key? key}) : super(key: key);
+  const IqroScreen({Key? key}) : super(key: key);
   static const String routeName = '/iqro';
 
   @override
@@ -12,6 +11,6 @@ class IqroScreen extends StatefulWidget {
 class _IqroScreenState extends State<IqroScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: const Text("IQRO1"));
+    return const Text("IQRO1");
   }
 }

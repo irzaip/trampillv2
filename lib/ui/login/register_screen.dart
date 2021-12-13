@@ -35,7 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: const Text('Register'),
       ),
       body: Container(
-        padding: EdgeInsets.only(right: 20, left: 20),
+        padding: const EdgeInsets.only(right: 20, left: 20),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -135,13 +135,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Get.snackbar(
                           "STATUS",
                           status,
-                          icon: Icon(Icons.person, color: Colors.white),
+                          icon: const Icon(Icons.person, color: Colors.white),
                           snackPosition: SnackPosition.BOTTOM,
                           backgroundColor: Colors.green,
                           borderRadius: 20,
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           colorText: Colors.white,
-                          duration: Duration(seconds: 4),
+                          duration: const Duration(seconds: 4),
                           isDismissible: true,
                           dismissDirection: SnackDismissDirection.HORIZONTAL,
                           forwardAnimationCurve: Curves.easeOutBack,
@@ -153,13 +153,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Get.snackbar(
                           "STATUS",
                           "Register Error",
-                          icon: Icon(Icons.error, color: Colors.white),
+                          icon: const Icon(Icons.error, color: Colors.white),
                           snackPosition: SnackPosition.BOTTOM,
                           backgroundColor: Colors.green,
                           borderRadius: 20,
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           colorText: Colors.white,
-                          duration: Duration(seconds: 4),
+                          duration: const Duration(seconds: 4),
                           isDismissible: true,
                           dismissDirection: SnackDismissDirection.HORIZONTAL,
                           forwardAnimationCurve: Curves.easeOutBack,

@@ -8,7 +8,7 @@ class LainnyaWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset : false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Lainnya..."),
       ),
@@ -28,11 +28,13 @@ class LainnyaWidget extends StatelessWidget {
                   ElevatedButton(
                       onPressed: () {
                         Get.toNamed('/setting');
-                      }, child: const Text("Settings")),
+                      },
+                      child: const Text("Settings")),
                   ElevatedButton(
                       onPressed: () {
-                        // Get.toNamed('/profile');
-                      }, child: const Text("Akun Saya")),
+                        Get.toNamed('/profile');
+                      },
+                      child: const Text("Akun Saya")),
                   ElevatedButton(
                       onPressed: () {
                         Get.toNamed('/tentang');
@@ -44,7 +46,9 @@ class LainnyaWidget extends StatelessWidget {
                       },
                       child: const Text("Hubungi kami")),
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed('/membuatkelas');
+                      },
                       child: const Text("Cara Membuat kelas")),
                   ElevatedButton(
                       onPressed: () {
@@ -61,7 +65,7 @@ class LainnyaWidget extends StatelessWidget {
                         Get.toNamed("/tentangapp");
                       },
                       child: const Text("Tentang Aplikasi ini")),
-                  ],
+                ],
               ))),
     );
   }

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-
 class TentangAppScreen extends StatefulWidget {
+  const TentangAppScreen({Key? key}) : super(key: key);
   static const String routeName = '/tentangapp';
   @override
   _TentangAppScreenState createState() => _TentangAppScreenState();
 }
 
 class _TentangAppScreenState extends State<TentangAppScreen> {
-  late String device_Id = "";
+  late String deviceId = "";
 
   PackageInfo _packageInfo = PackageInfo(
     appName: 'Unknown',
@@ -25,9 +25,8 @@ class _TentangAppScreenState extends State<TentangAppScreen> {
     getDevice();
   }
 
-
   Future<void> getDevice() async {
-    device_Id = "10029";
+    deviceId = "10029";
   }
 
   Future<void> _initPackageInfo() async {
@@ -39,8 +38,14 @@ class _TentangAppScreenState extends State<TentangAppScreen> {
 
   Widget _infoTile(String title, String subtitle) {
     return ListTile(
-      title: Text(title, style: TextStyle(fontSize: 20),),
-      subtitle: Text(subtitle, style: TextStyle(fontSize: 18),),
+      title: Text(
+        title,
+        style: const TextStyle(fontSize: 20),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: const TextStyle(fontSize: 18),
+      ),
     );
   }
 
@@ -48,18 +53,16 @@ class _TentangAppScreenState extends State<TentangAppScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text("Tentang App ini")),
+      appBar: AppBar(title: const Text("Tentang App ini")),
       body: Column(
         children: <Widget>[
-          _infoTile("Device id", device_Id),
+          _infoTile("Device id", deviceId),
           _infoTile('App name', _packageInfo.appName),
           _infoTile('Package name', _packageInfo.packageName),
           _infoTile('App version', _packageInfo.version),
           _infoTile('Build number', _packageInfo.buildNumber),
         ],
       ),
-
     );
   }
 }
-

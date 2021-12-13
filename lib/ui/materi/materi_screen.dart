@@ -24,6 +24,7 @@ class _MateriScreenState extends State<MateriScreen> {
   late Future<Object> resultmateri;
   final Materi materi = Get.arguments;
   late Topic topic;
+  List<String> listtopics = [];
   final PageController _pageController = PageController();
 
   @override
@@ -48,6 +49,9 @@ class _MateriScreenState extends State<MateriScreen> {
         throw ("Anda harus mendaftar materi ini terlebih dahulu");
       }
       var result = await compute(parseTopic, request.body);
+      for (var element in result) {
+        listtopics.add(element.judul);
+      }
       return result;
     } else if (request.statusCode == 401) {
       throw ("Error loading materi, not login?");
@@ -56,9 +60,9 @@ class _MateriScreenState extends State<MateriScreen> {
     }
   }
 
-  Widget playYoutube(url_youtube, judul) {
+  Widget playYoutube(urlYoutube, judul) {
     String? videoId;
-    videoId = YoutubePlayer.convertUrlToId(url_youtube) ?? "";
+    videoId = YoutubePlayer.convertUrlToId(urlYoutube) ?? "";
     YoutubePlayerController _controller = YoutubePlayerController(
       initialVideoId: videoId,
       flags: const YoutubePlayerFlags(
@@ -82,58 +86,79 @@ class _MateriScreenState extends State<MateriScreen> {
         });
   }
 
-_launchURL(open_url) async {
-  var url = open_url.toString();
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
+  _launchURL(openUrl) async {
+    var url = openUrl.toString();
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
-}
+
   Widget pageCard(topic) {
     if (topic.jenis.toString() == 'Label') {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [ 
+        children: [
           Text(
-          topic.judul.toString(),
-          style: bigfont,
-        ),
+            topic.judul.toString(),
+            style: bigfont,
+          ),
         ],
       );
     } else if (topic.jenis.toString() == 'Link Video' &&
         topic.link.toString().contains('youtube')) {
       return playYoutube(topic.link.toString(), topic.judul.toString());
     } else if (topic.jenis.toString() == 'Konten Umum') {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+      return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text(topic.judul.toString(), style: bigfont),
         Text(topic.link.toString(), style: linkfont),
-        ElevatedButton(onPressed: () {
-          _launchURL(topic.link.toString());
-        }, child: const Text("Buka")),
+        ElevatedButton(
+            onPressed: () {
+              _launchURL(topic.link.toString());
+            },
+            child: const Text("Buka")),
         const SizedBox(height: 20),
-        Text(topic.isiTambahan.toString(), style: mediumfont,)
+        Text(
+          topic.isiTambahan.toString(),
+          style: mediumfont,
+        )
       ]);
     } else if (topic.jenis.toString() == 'Tugas') {
-      return Center(child: Text(topic.judul.toString(), style: bigfont,));
+      return Center(
+          child: Text(
+        topic.judul.toString(),
+        style: bigfont,
+      ));
     } else if (topic.jenis.toString() == 'Quiz') {
-      return Center(child: Text(topic.judul.toString(), style: bigfont,));
+      return Center(
+          child: Text(
+        topic.judul.toString(),
+        style: bigfont,
+      ));
     } else if (topic.jenis.toString() == 'Feedback') {
-      return Center(child: Text(topic.judul.toString(), style: bigfont,));
+      return Center(
+          child: Text(
+        topic.judul.toString(),
+        style: bigfont,
+      ));
     } else if (topic.jenis.toString() == 'Url luar') {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-        Text(topic.judul.toString(), style: bigfont,),
-        Text(topic.link.toString(), style: mediumfont,),
-        ElevatedButton(onPressed: () {
-          _launchURL(topic.link.toString());
-        }, child: const Text("Buka"))
+      return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(
+          topic.judul.toString(),
+          style: bigfont,
+        ),
+        Text(
+          topic.link.toString(),
+          style: mediumfont,
+        ),
+        ElevatedButton(
+            onPressed: () {
+              _launchURL(topic.link.toString());
+            },
+            child: const Text("Buka"))
       ]);
-
     } else if (topic.jenis.toString() == 'File') {
       return Center(child: Text(topic.judul.toString()));
     } else {
@@ -184,23 +209,22 @@ _launchURL(open_url) async {
                   ElevatedButton(
                       onPressed: () async {
                         var result = await Get.offNamed('/login');
-                        if (result  == "success") {
+                        if (result == "success") {
                           Get.close(1);
                           Get.snackbar(
-                          "STATUS",
-                          "Login Berhasil",
-                          icon: Icon(Icons.person, color: Colors.white),
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.green,
-                          borderRadius: 20,
-                          margin: EdgeInsets.all(15),
-                          colorText: Colors.white,
-                          duration: Duration(seconds: 4),
-                          isDismissible: true,
-                          dismissDirection: SnackDismissDirection.HORIZONTAL,
-                          forwardAnimationCurve: Curves.easeOutBack,
-                        );
-              
+                            "STATUS",
+                            "Login Berhasil",
+                            icon: const Icon(Icons.person, color: Colors.white),
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.green,
+                            borderRadius: 20,
+                            margin: const EdgeInsets.all(15),
+                            colorText: Colors.white,
+                            duration: const Duration(seconds: 4),
+                            isDismissible: true,
+                            dismissDirection: SnackDismissDirection.HORIZONTAL,
+                            forwardAnimationCurve: Curves.easeOutBack,
+                          );
                         }
                       },
                       child: const Text("Login"))
@@ -219,14 +243,39 @@ _launchURL(open_url) async {
             ElevatedButton(
                 onPressed: () {
                   _pageController.previousPage(
-                      duration: const Duration(seconds: 1), curve: Curves.easeInOut);
+                      duration: const Duration(seconds: 1),
+                      curve: Curves.easeInOut);
                 },
                 child: const Icon(Icons.arrow_left)),
-            const ElevatedButton(onPressed: null, child: Icon(Icons.topic)),
+            ElevatedButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: ListView.builder(
+                              itemCount: listtopics.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return ElevatedButton(
+                                  onPressed: () {
+                                    _pageController.animateToPage(index,
+                                        duration: const Duration(seconds: 1),
+                                        curve: Curves.easeInOut);
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(listtopics[index]),
+                                );
+                              }),
+                        );
+                      });
+                },
+                child: const Icon(Icons.topic)),
             ElevatedButton(
                 onPressed: () {
                   _pageController.nextPage(
-                      duration: const Duration(seconds: 1), curve: Curves.easeInOut);
+                      duration: const Duration(seconds: 1),
+                      curve: Curves.easeInOut);
                 },
                 child: const Icon(Icons.arrow_right)),
           ],

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 class SyaratKetentuanScreen extends StatefulWidget {
+  const SyaratKetentuanScreen({Key? key}) : super(key: key);
   static const String routeName = '/syaratketentuan';
-  
+
   @override
   _SyaratKetentuanScreenState createState() => _SyaratKetentuanScreenState();
 }
 
 class _SyaratKetentuanScreenState extends State<SyaratKetentuanScreen> {
-
   final String content = """
 ### Syarat dan Ketentuan Trampill
 
@@ -123,13 +123,14 @@ Seorang pengguna Trampill akan mengganti kerugian, membela dan menjaga dari rasa
 13.4.Persyaratan dan Ketentuan didirikan pada perjanjian ini sesuai dengan Hukum Indonesia.
   """;
 
-
   @override
   Widget build(BuildContext context) {
     final controller = ScrollController();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Syarat & Ketentuan"),),
+      appBar: AppBar(
+        title: const Text("Syarat & Ketentuan"),
+      ),
       body: Container(
         color: Colors.white,
         child: SafeArea(

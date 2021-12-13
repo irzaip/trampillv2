@@ -5,6 +5,7 @@ import 'package:trampillv2/ui/favorit/favorit.dart';
 import 'package:trampillv2/ui/home/home_screen.dart';
 import 'package:trampillv2/ui/lainnya/hubungikami.dart';
 import 'package:trampillv2/ui/lainnya/lainnya.dart';
+import 'package:trampillv2/ui/lainnya/membuatkelas.dart';
 import 'package:trampillv2/ui/lainnya/privasi.dart';
 import 'package:trampillv2/ui/lainnya/profil.dart';
 import 'package:trampillv2/ui/lainnya/setting.dart';
@@ -44,17 +45,18 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/login", page: () => const LoginScreen()),
         GetPage(name: "/detailmateri", page: () => const DetailMateriScreen()),
         GetPage(name: "/forgot", page: () => const ForgotScreen()),
-        GetPage(name: "/hubungikami", page: () => HubungiKamiScreen()),
-        GetPage(name: "/privasi", page: () => PrivasiScreen()),
-        GetPage(name: "/syaratketentuan", page: () => SyaratKetentuanScreen()),
+        GetPage(name: "/hubungikami", page: () => const HubungiKamiScreen()),
+        GetPage(name: "/privasi", page: () => const PrivasiScreen()),
+        GetPage(name: "/syaratketentuan", page: () => const SyaratKetentuanScreen()),
         GetPage(name: "/tentang", page: () => TentangScreen()),
-        GetPage(name: "/tentangapp", page: () => TentangAppScreen()),
-        GetPage(name:"/kegiatan", page: () => const KegiatanScreen()),
-        GetPage(name: "/listkegiatan", page: () => ListKegiatanScreen()),
+        GetPage(name: "/tentangapp", page: () => const TentangAppScreen()),
+        GetPage(name: "/kegiatan", page: () => const KegiatanScreen()),
+        GetPage(name: "/listkegiatan", page: () => const ListKegiatanScreen()),
         GetPage(name: "/register", page: () => const RegisterScreen()),
-        GetPage(name: "/setting" , page: () => SettingScreen()),
-        GetPage(name: "/message" , page: () => const MessageScreen()),
-        GetPage(name: "/profile", page: () => ProfileScreen()),
+        GetPage(name: "/setting", page: () => const SettingScreen()),
+        GetPage(name: "/message", page: () => const MessageScreen()),
+        GetPage(name: "/profile", page: () => const ProfileScreen()),
+        GetPage(name: "/membuatkelas", page: () => MembuatKelasScreen()),
       ],
       debugShowCheckedModeBanner: false,
       // onGenerateRoute: Routes.generateRoute,

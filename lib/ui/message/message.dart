@@ -25,7 +25,7 @@ class _MessageScreenState extends State<MessageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pesan"),
+        title: const Text("Pesan"),
       ),
       body: FutureBuilder(
           future: messages,
@@ -41,21 +41,26 @@ class _MessageScreenState extends State<MessageScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            SizedBox(height: 10,),
-                            Text(snapshot.data[index].createdAt, style: kategorifont,),
-                            SizedBox(
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              snapshot.data[index].createdAt,
+                              style: kategorifont,
+                            ),
+                            const SizedBox(
                               height: 10,
                             ),
                             Text("Dari :" + snapshot.data[index].sender,
                                 style: mediumfontbold),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
                               "Pesan :" + snapshot.data[index].messageContent,
                               style: mediumfont,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                           ],

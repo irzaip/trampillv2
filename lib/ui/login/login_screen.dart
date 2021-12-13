@@ -97,53 +97,50 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       Get.back(result: "success");
                       Get.snackbar(
-                          "STATUS",
-                          "Login Berhasil",
-                          icon: Icon(Icons.person, color: Colors.white),
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.green,
-                          borderRadius: 20,
-                          margin: EdgeInsets.all(15),
-                          colorText: Colors.white,
-                          duration: Duration(seconds: 4),
-                          isDismissible: true,
-                          dismissDirection: SnackDismissDirection.HORIZONTAL,
-                          forwardAnimationCurve: Curves.easeOutBack,
-                        );
-
+                        "STATUS",
+                        "Login Berhasil",
+                        icon: const Icon(Icons.person, color: Colors.white),
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: Colors.green,
+                        borderRadius: 20,
+                        margin: const EdgeInsets.all(15),
+                        colorText: Colors.white,
+                        duration: const Duration(seconds: 4),
+                        isDismissible: true,
+                        dismissDirection: SnackDismissDirection.HORIZONTAL,
+                        forwardAnimationCurve: Curves.easeOutBack,
+                      );
                     } else {
-                        Get.snackbar(
-                          "STATUS",
-                          "Login gagal - userid atau password salah",
-                          icon: Icon(Icons.person, color: Colors.white),
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.green,
-                          borderRadius: 20,
-                          margin: EdgeInsets.all(15),
-                          colorText: Colors.white,
-                          duration: Duration(seconds: 4),
-                          isDismissible: true,
-                          dismissDirection: SnackDismissDirection.HORIZONTAL,
-                          forwardAnimationCurve: Curves.easeOutBack,
-                        );
-
+                      Get.snackbar(
+                        "STATUS",
+                        "Login gagal - userid atau password salah",
+                        icon: const Icon(Icons.person, color: Colors.white),
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: Colors.green,
+                        borderRadius: 20,
+                        margin: const EdgeInsets.all(15),
+                        colorText: Colors.white,
+                        duration: const Duration(seconds: 4),
+                        isDismissible: true,
+                        dismissDirection: SnackDismissDirection.HORIZONTAL,
+                        forwardAnimationCurve: Curves.easeOutBack,
+                      );
                     }
                   } catch (e) {
-                        Get.snackbar(
-                          "STATUS",
-                          "Error Connecting server, please check internet",
-                          icon: Icon(Icons.error, color: Colors.white),
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.green,
-                          borderRadius: 20,
-                          margin: EdgeInsets.all(15),
-                          colorText: Colors.white,
-                          duration: Duration(seconds: 4),
-                          isDismissible: true,
-                          dismissDirection: SnackDismissDirection.HORIZONTAL,
-                          forwardAnimationCurve: Curves.easeOutBack,
-                        );
-
+                    Get.snackbar(
+                      "STATUS",
+                      "Error Connecting server, please check internet",
+                      icon: const Icon(Icons.error, color: Colors.white),
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: Colors.green,
+                      borderRadius: 20,
+                      margin: const EdgeInsets.all(15),
+                      colorText: Colors.white,
+                      duration: const Duration(seconds: 4),
+                      isDismissible: true,
+                      dismissDirection: SnackDismissDirection.HORIZONTAL,
+                      forwardAnimationCurve: Curves.easeOutBack,
+                    );
                   }
                   setState(() {});
                 },

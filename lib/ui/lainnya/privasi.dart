@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 class PrivasiScreen extends StatefulWidget {
+  const PrivasiScreen({Key? key}) : super(key: key);
   static const routeName = "/privasi";
 
   @override
@@ -9,7 +10,6 @@ class PrivasiScreen extends StatefulWidget {
 }
 
 class _PrivasiScreenState extends State<PrivasiScreen> {
-
   final String content = """
   
 Dengan menggunakan layanan kami, Anda memercayakan informasi Anda kepada kami. Kami paham bahwa melindungi informasi Anda dan memberikan kontrol kepada Anda adalah tanggung jawab yang besar dan memerlukan kerja keras.
@@ -350,8 +350,10 @@ Cara Trampill menggunakan informasi dari situs atau aplikasi yang menggunakan la
     final controller = ScrollController();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Privasi"),),
-      body:  Container(
+      appBar: AppBar(
+        title: const Text("Privasi"),
+      ),
+      body: Container(
         color: Colors.white,
         child: SafeArea(
           child: Markdown(

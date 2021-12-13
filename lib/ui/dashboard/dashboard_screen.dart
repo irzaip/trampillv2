@@ -6,10 +6,10 @@ import 'package:trampillv2/ui/lainnya/lainnya.dart';
 import 'package:trampillv2/ui/materisaya/materi_saya.dart';
 import 'package:trampillv2/ui/pembayaran/pembayaran_screen.dart';
 
-
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key? key}) : super(key: key);
   static const String routeName = '/dashboard';
+  // ignore: prefer_typing_uninitialized_variables
   late var loggedin;
 
   @override
@@ -28,7 +28,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<Widget> _dashboardBodyWidgets = <Widget>[
     const HomeScreenWidget(),
     const MateriSayaScreen(),
-    IqroScreen(),
+    const IqroScreen(),
     const PembayaranScreen(),
     const LainnyaWidget(),
   ];

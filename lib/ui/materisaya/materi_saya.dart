@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,13 +18,35 @@ class MateriSayaScreen extends StatefulWidget {
 }
 
 class _MateriSayaScreenState extends State<MateriSayaScreen> {
+  // ignore: prefer_typing_uninitialized_variables
   late var loggedin;
+  var listterdaftar = [];
+
 
   // @override
   // void initState() {
   //   // super.initState();
   //   loggedin = relogin();
   // }
+
+  Future<String> hapusPendaftaran(materi) async {
+    var prefs = await SharedPreferences.getInstance();
+    String api = '/api/hapuspendaftaran/' + materi.toString() + "/";
+    String access = prefs.getString("access").toString();
+    String fulltoken = 'Bearer ' + access;
+    String mainhome = prefs.getString("mainhome").toString();
+
+    final request = await http.get(Uri.parse(mainhome + api),
+        headers: {HttpHeaders.authorizationHeader: fulltoken});
+
+    if (request.statusCode == 200) {
+        var response = jsonDecode(request.body).toString();
+        return response;
+    } else {
+        throw ("Error menghapus materi");
+    }
+
+  }
 
   Future<Object> pendaftaran() async {
     var prefs = await SharedPreferences.getInstance();
@@ -36,9 +60,9 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
 
     if (request.statusCode == 200) {
       var result = await compute(parseListPendaftaran, request.body);
-      var listterdaftar = [];
+      // ignore: avoid_function_literals_in_foreach_calls
       result.forEach((element) { listterdaftar.add(element.materi.id);});
-      listterdaftar.sort();
+      // listterdaftar.sort();
       prefs.setString('listterdaftar', listterdaftar.toString());
       return result;
     } else {
@@ -55,7 +79,7 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
             Expanded(child: Text(materi.judul, style: bigfont,)),
             IconButton(
               color: Colors.blue,
-              onPressed: () {}, icon: Icon(Icons.favorite)),
+              onPressed: () {}, icon: const Icon(Icons.favorite)),
             ElevatedButton(onPressed: () {
               Get.toNamed('/materi', arguments: materi);
             }, child: const Text("Buka")),
@@ -69,6 +93,9 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(onPressed: () { 
+          Get.offAllNamed('/');
+        }, icon: const Icon(Icons.arrow_left_outlined)),
         title: const Text("Materi terdaftar saya"),
       actions: [
         IconButton(
@@ -76,7 +103,7 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
           onPressed: () {
           Get.toNamed('/favorit');
         }, 
-        icon: Icon(Icons.favorite),),
+        icon: const Icon(Icons.favorite),),
       ],
       ),
       body: FutureBuilder(
@@ -87,19 +114,23 @@ class _MateriSayaScreenState extends State<MateriSayaScreen> {
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, int index) {
                     return Dismissible(
-                      key: new Key(snapshot.data[index].toString()),
-                      onDismissed: (direction) {
+                      background: Container(color: Colors.red,),
+                      key: Key(snapshot.data[index].toString()),
+                      onDismissed: (direction) async {
                         snapshot.data.removeAt(index);
+                        // listterdaftar.removeAt(index);
+                        var response = await hapusPendaftaran(listterdaftar[index]);
+                        Get.offAndToNamed("/materisaya");
                         Get.snackbar(
                           "STATUS",
-                          "Materi telah dihapus",
-                          icon: Icon(Icons.info, color: Colors.white),
+                          response,
+                          icon: const Icon(Icons.info, color: Colors.white),
                           snackPosition: SnackPosition.BOTTOM,
                           backgroundColor: Colors.green,
                           borderRadius: 20,
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           colorText: Colors.white,
-                          duration: Duration(seconds: 4),
+                          duration: const Duration(seconds: 4),
                           isDismissible: true,
                           dismissDirection: SnackDismissDirection.HORIZONTAL,
                           forwardAnimationCurve: Curves.easeOutBack,
